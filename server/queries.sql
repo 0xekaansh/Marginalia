@@ -1,0 +1,9 @@
+CREATE TABLE booklist (
+  id SERIAL PRIMARY KEY,
+  open_library_id VARCHAR(50) UNIQUE NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  author VARCHAR(255) NOT NULL,
+  cover_id INT,
+  ol_data JSONB,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
