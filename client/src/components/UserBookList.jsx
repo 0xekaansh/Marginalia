@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import UserShelfList from "./UserShelfList";
 
 function UserBookList() {
   const [loading, setLoading] = useState(false);
   const [booksList, setBooksList] = useState([]);
+
 
   useEffect(() => {
     const fetchBookList = async () => {
@@ -31,25 +33,7 @@ function UserBookList() {
         <p>No books saved to your shelf yet.</p>
       )}
 
-      <ul>
-        {booksList.map((book, index) => {
-          const coverURL = book.cover_id
-            ? `https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`
-            : "https://via.placeholder.com/50x75?text=No+Cover";
-
-          return (
-            <li key={index}>
-              <img src={coverURL} alt={book.title} />
-              <div>
-                <strong>{book.title}</strong>
-                <p>
-                  {book.author ? book.author : "Unknown Author"}{" "}
-                </p>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      <UserShelfList books={booksList}/>
     </div>
   );
 }

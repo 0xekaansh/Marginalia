@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import AddEntryButton from "./AddEntry";
+import HomeBookGrid from "./HomeBookGrid";
 
 function HomePage() {
   const [books, setBooks] = useState([]);
-  const [genre, setGenre] = useState("featured");
+  const [genre, setGenre] = useState("science_fiction");
   const [loading, setLoading] = useState(false);
 
   const genres = [
-    { label: "Featured", value: "featured" },
     { label: "Sci-Fi", value: "science_fiction" },
     { label: "Romance", value: "romance" },
     { label: "Mystery", value: "mystery" },
@@ -29,7 +28,7 @@ function HomePage() {
 
       try {
         const result = await axios.get(
-          `https://openlibrary.org/subjects/${genre}.json?limit=10`,
+          `https://openlibrary.org/subjects/${genre}.json?sort=trending&limit=10`,
         );
         setBooks(result.data.works || []);
       } catch (err) {
@@ -61,35 +60,9 @@ function HomePage() {
         </div>
       </div>
 
-      <h3>
-        {genre === "featured"
-          ? "Trending Now"
-          : `${genre.replace("_", " ")} Books`}
-      </h3>
-
       {loading && <p>Loading books...</p>}
 
-      <div className="book-grid">
-        {!loading &&
-          books.map((book) => {
-            const coverURL = book.cover_id
-              ? `https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`
-              : "https://via.placeholder.com/120x180?text=No+Cover";
-
-            return (
-              <div key={book.key}>
-                <div>
-                  <img src={coverURL} alt={book.title} />
-                  <strong>{book.title}</strong>
-                  <p>
-                    {book.authors ? book.authors[0].name : "Unknown Author"}
-                  </p>
-                </div>
-                <AddEntryButton book={book} />
-              </div>
-            );
-          })}
-      </div>
+      <HomeBookGrid books={books} />
     </div>
   );
 }
