@@ -1,15 +1,26 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 function AddEntryButton({ book }) {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleEntry = async (e) => {
+    const token = Cookies.get("token");
+    if (!token) {
+      alert("Please log in to add books to your shelf.");
+      navigate("/login");
+      return;
+    }
+
     setLoading(true);
     try {
       const result = await axios.post(
-        "http://localhost:5000/api/addNewEntry",
+        `${import.meta.env.VITE_API_BASE_URL}/addNewEntry`,
         book,
+        { headers: { Authorization: `Bearer ${token}` } },
       );
       alert(`${book.title} added to your shelf!`);
     } catch (err) {
@@ -21,7 +32,7 @@ function AddEntryButton({ book }) {
   };
 
   return (
-    <button onClick={handleEntry}>
+    <button onClick={handleEntry} disabled={loading}>
       {loading ? "Adding" : "+ Add to shelf"}
     </button>
   );

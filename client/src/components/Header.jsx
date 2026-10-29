@@ -1,7 +1,17 @@
 import HubIcon from "@mui/icons-material/Hub";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authContext";
+import Button from "@mui/material/Button";
 
 function Header() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
     <header>
       <h1>
@@ -11,7 +21,17 @@ function Header() {
       </h1>
       <nav>
         <Link to="/search">Search Books</Link>
-        <Link to="/list">My Shelf (List)</Link>
+        {user ? (
+          <>
+            <Link to="/list">My Shelf (List)</Link>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        ) : (
+          <>
+            <Link to="/register">Register</Link>
+            <Link to="/login">Login</Link>{" "}
+          </>
+        )}
       </nav>
     </header>
   );

@@ -14,11 +14,16 @@ function HomeBookGrid({ books }) {
           : (book.author_name ? book.author_name[0] : "Unknown Author");
 
         // Normalized book object for the add button
+        const authorList = book.authors || [];
+        const authorNames = authorList.map(author => author.name);
+        const authorKeys = authorList.map(author =>author.key.replace('/authors/', ''));
         const normalizedBook = {
+          key: book.key,
           title: book.title,
-          author_name: [authorName],
-          cover_i: coverId,
-          key: book.key
+          author_name: authorNames,
+          author_key: authorKeys,
+          cover_i: coverId || null,
+          first_publish_year: book.first_publish_year || null
         };
 
         return (
