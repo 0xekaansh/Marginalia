@@ -6,6 +6,8 @@ import Search from "./components/Search";
 import UserBookList from "./components/UserBookList";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import SearchResultsPage from "./components/SearchResultPage";
+import { ProtectedRoute } from "./context/ProtectedRoute";
 
 function App() {
   return (
@@ -14,9 +16,12 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/list" element={<UserBookList />} />
+        <Route path="/search-results" element={<SearchResultsPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/list" element={<UserBookList />} />
+        </Route>
       </Routes>
       <Footer />
     </BrowserRouter>

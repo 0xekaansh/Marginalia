@@ -1,0 +1,122 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.2rem 2rem;
+    background-color: white;
+    border-bottom: 1px solid black;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    text-decoration: none;
+    color: rgb(5, 181, 61);
+    font-size: 1.8rem;
+}
+
+.navbar {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.navLink {
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+}
+
+.dropDown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropDownToggle {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    gap: 0.4rem;
+    background: none;
+    border: 1px solid black;
+    padding: 0.5rem 0.9rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.dropDownToggle:hover {
+    background-color: #f7f7f7;
+}
+
+.arrow-icon {
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
+}
+
+.dropDownMenu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    min-width: 170px;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    padding: 0;
+    z-index: 1000;
+}
+
+.dropDownMenu::before {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    display: block;
+}
+
+.dropDownMenu .navLink {
+    display: block;
+    margin: 0;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+}
+
+.dropDownMenu .navLink:first-of-type {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+.dropDownMenu .navLink:last-of-type {
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+.dropDownMenu .navLink:hover {
+    background-color: #f4f4f4;
+}
+
+.logoutBtn {
+    color: #dc2626 !important
+}
+
+.dropDown:hover .dropDownMenu,
+.dropDown:focus-within .dropDownMenu {
+    display: block;
+}
+
+.dropDown:hover .arrowIcon,
+.dropDown:focus-within .arrowIcon {
+    transform: rotate(180deg);
+}

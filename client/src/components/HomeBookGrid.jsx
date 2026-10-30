@@ -9,7 +9,7 @@ function HomeBookGrid({ books }) {
           ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`
           : "https://via.placeholder.com/120x180?text=No+Cover";
 
-        const authorName = book.authors
+        const authorName = book.authors && book.authors.length > 0
           ? book.authors[0].name
           : (book.author_name ? book.author_name[0] : "Unknown Author");
 

@@ -1,11 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
-import SearchResultList from "./SearchResultList";
+import styles from "./Search.module.css";
+import SearchIcon from "@mui/icons-material/Search";
+import LoadingSpinner from "../assets/LoadingSpinner";
+import { useNavigate } from "react-router-dom";
 
 function Search() {
   const [query, setQuery] = useState("");
-  const [booksList, setBooksList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const bookSearch = async (e) => {
     e.preventDefault();
@@ -16,7 +19,8 @@ function Search() {
       const result = await axios.get(
         `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}`,
       );
-      setBooksList(result.data.docs.slice(0, 10));
+      const books = result.data.docs.slice(0, 10);
+      navigate("/search-results", { state: { books, query } });
     } catch (err) {
       console.error("Error fetching data from Open Library API", err);
     } finally {
@@ -25,10 +29,11 @@ function Search() {
   };
 
   return (
-    <div>
+    <div className={styles.search}>
       {/* Book Search Form */}
-      <form id="searchForm" onSubmit={bookSearch}>
+      <form className={styles.searchForm} onSubmit={bookSearch}>
         <input
+          className={styles.searchInput}
           type="text"
           name="Search"
           placeholder="Search by book title or author"
@@ -37,11 +42,15 @@ function Search() {
             setQuery(e.target.value);
           }}
         />
-        <button type="submit">{loading ? "Searching" : "Search"}</button>
-      </form>
 
-      {/* Book list */}
-      <SearchResultList books={booksList}/>
+        {loading ? (
+          <LoadingSpinner className={styles.smallSpinner} />
+        ) : (
+          <button className={styles.searchBtn} type="submit">
+            <SearchIcon />
+          </button>
+        )}
+      </form>
     </div>
   );
 }

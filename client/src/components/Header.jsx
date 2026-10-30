@@ -1,7 +1,8 @@
 import HubIcon from "@mui/icons-material/Hub";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-import Button from "@mui/material/Button";
+import Search from "./Search";
+import styles from "./Header.module.css";
 
 function Header() {
   const { user, logout } = useAuth();
@@ -13,23 +14,41 @@ function Header() {
   };
 
   return (
-    <header>
+    <header className={styles.header}>
       <h1>
-        <Link to="/">
+        <Link to="/" className={styles.logo}>
           <HubIcon /> Marginalia
         </Link>
       </h1>
-      <nav>
-        <Link to="/search">Search Books</Link>
+      <nav className={styles.navbar}>
+        <Search className={styles.searchBar} />
         {user ? (
-          <>
-            <Link to="/list">My Shelf (List)</Link>
-            <button onClick={handleLogout}>Logout</button>
-          </>
+          <div className={styles.dropDown}>
+            <button
+              type="button"
+              className={styles.dropDownToggle}
+              aria-expanded="false"
+            >
+              <span>{user.username}</span>
+              <span className={styles.arrowIcon}>&#9662;</span>
+            </button>
+            <div className={styles.dropDownMenu}>
+              <Link to="/list" className={styles.navLink}>
+                My Shelf (List)
+              </Link>
+              <Link onClick={handleLogout} className={`${styles.logoutBtn} ${styles.navLink}`}>
+                Logout
+              </Link>
+            </div>
+          </div>
         ) : (
           <>
-            <Link to="/register">Register</Link>
-            <Link to="/login">Login</Link>{" "}
+            <Link to="/register" className={styles.navLink}>
+              Register
+            </Link>
+            <Link to="/login" className={styles.navLink}>
+              Login
+            </Link>{" "}
           </>
         )}
       </nav>

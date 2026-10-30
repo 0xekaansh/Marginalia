@@ -1,0 +1,36 @@
+.search {
+    display: flex;
+}
+
+.searchForm {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.searchInput {
+    height: 40px;
+    width: 450px;
+    padding: 0.75rem 1rem;
+    border-radius: 20px;
+}
+
+.searchBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+}
+
+.smallSpinner {
+    padding: 0 !important;
+    height: 40px;
+    width: 40px;
+}
+
+.smallSpinner svg {
+    height: 30px;
+    width: 30px;
+}

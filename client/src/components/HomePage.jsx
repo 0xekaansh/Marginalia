@@ -46,7 +46,7 @@ function HomePage() {
       <div className="hero-banner">
         <h1>For the notes you leave in the margins of your reading life.</h1>
         <p>Discover, track, and organize your personal reading bookshelf.</p>
-        <Link to="/search">Search Books</Link>
+        <Link to="/search-results">Search Books</Link>
       </div>
 
       <div className="categories">

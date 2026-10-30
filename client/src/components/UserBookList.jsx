@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import UserShelfList from "./UserShelfList";
-import Cookies from "js-cookie"
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 function UserBookList() {
   const [loading, setLoading] = useState(false);
   const [booksList, setBooksList] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = Cookies.get('token'); 
+    const token = Cookies.get("token");
 
     if (!token) {
-      console.error("No token found. User might be logged out.");
+      navigate("/login");
       return;
     }
 
