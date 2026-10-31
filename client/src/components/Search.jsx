@@ -25,6 +25,7 @@ function Search() {
       console.error("Error fetching data from Open Library API", err);
     } finally {
       setLoading(false);
+      setQuery("");
     }
   };
 

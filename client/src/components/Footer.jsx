@@ -1,7 +1,9 @@
+import styles from "./Footer.module.css"
+
 function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer>
+    <footer className={styles.footer}>
       <p>Copyright ⓒ {year}</p>
     </footer>
   );

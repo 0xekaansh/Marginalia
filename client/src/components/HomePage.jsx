@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import HomeBookGrid from "./HomeBookGrid";
+import styles from "./HomePage.module.css";
+import { useAuth } from "../context/authContext";
 
 function HomePage() {
   const [books, setBooks] = useState([]);
   const [genre, setGenre] = useState("science_fiction");
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
   const genres = [
     { label: "Sci-Fi", value: "science_fiction" },
@@ -42,11 +45,26 @@ function HomePage() {
   }, [genre]);
 
   return (
-    <div>
-      <div className="hero-banner">
-        <h1>For the notes you leave in the margins of your reading life.</h1>
-        <p>Discover, track, and organize your personal reading bookshelf.</p>
-        <Link to="/search-results">Search Books</Link>
+    <div className={styles.container}>
+      <div className={styles.heroBanner}>
+        <div className={styles.heroHeading}>
+          <h1>For the notes you leave in the margins of your reading life.</h1>
+          <p>Discover, track, and organize your personal reading bookshelf.</p>
+        </div>
+        <div className={styles.heroLinks}>
+          {user ? (
+            <>
+              <p>Welcome Back, <strong>{user.username}</strong></p>
+              <Link to="/register" className={styles.searchLink}>
+                Search Books
+              </Link>
+            </>
+          ) : (
+            <Link to="/register" className={styles.joinLink}>
+              Join The Club Now
+            </Link>
+          )}
+        </div>
       </div>
 
       <div className="categories">

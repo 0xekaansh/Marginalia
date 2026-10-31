@@ -1,19 +1,40 @@
 .header {
     display: flex;
+    justify-content: center;
+    padding: 1.5rem 2rem;
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.headerContainer {
+    display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 0.2rem 2rem;
-    background-color: white;
-    border-bottom: 1px solid black;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    width: 80%;
+
 }
 
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+    font-family: var(--font-special);
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     text-decoration: none;
-    color: rgb(5, 181, 61);
-    font-size: 1.8rem;
+    color: inherit;
+}
+
+.logo svg {
+    width: 50px;
+    height: 50px;
+    color: var(--accent-color);
 }
 
 .navbar {
@@ -24,8 +45,25 @@
 
 .navLink {
     text-decoration: none;
-    color: black;
+    color: var(--text-secondary);
     font-size: 1rem;
+    font-weight: 500;
+    padding: 0.4rem 0.6rem;
+    border-radius: 8px;
+    transition: var(--color-transition);
+}
+
+.register {
+    color: var(--card-bg);
+    background-color: var(--accent-color);
+}
+
+.register:hover {
+    background-color: var(--accent-hover);
+}
+
+.login:hover {
+    color: var(--text-primary);
 }
 
 .dropDown {
@@ -39,9 +77,9 @@
     height: 40px;
     gap: 0.4rem;
     background: none;
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     padding: 0.5rem 0.9rem;
-    border-radius: 8px;
+    border-radius: 20px;
     font-family: inherit;
     font-size: 0.95rem;
     font-weight: 600;
@@ -51,7 +89,7 @@
 }
 
 .dropDownToggle:hover {
-    background-color: #f7f7f7;
+    background-color: #f4f4f4;
 }
 
 .arrow-icon {
@@ -67,7 +105,7 @@
     min-width: 170px;
     background-color: #ffffff;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 20px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     padding: 0;
     z-index: 1000;
@@ -90,17 +128,18 @@
     font-size: 0.9rem;
     color: var(--text-primary);
     text-decoration: none;
+    border-radius: 0;
     transition: background-color 0.15s ease;
 }
 
 .dropDownMenu .navLink:first-of-type {
-    border-top-left-radius: 7px;
-    border-top-right-radius: 7px;
+    border-top-left-radius: 19px;
+    border-top-right-radius: 19px;
 }
 
 .dropDownMenu .navLink:last-of-type {
-    border-bottom-left-radius: 7px;
-    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 19px;
+    border-bottom-right-radius: 19px;
 }
 
 .dropDownMenu .navLink:hover {

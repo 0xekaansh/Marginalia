@@ -12,16 +12,31 @@
     height: 40px;
     width: 450px;
     padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    background-color: transparent;
     border-radius: 20px;
+}
+
+.searchInput:focus {
+    outline: none;
 }
 
 .searchBtn {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: transparent;
+    border: none;
     height: 40px;
     width: 40px;
     border-radius: 20px;
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.searchBtn:hover {
+    color: var(--text-primary);
+    background-color: var(--border-color);
 }
 
 .smallSpinner {
