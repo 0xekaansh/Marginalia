@@ -1,13 +1,14 @@
 import AddEntryButton from "./AddEntry";
+import styles from "./HomeBookGrid.module.css"
 
 function HomeBookGrid({ books }) {
   return (
-    <div className="book-grid">
+    <div className={styles.grid}>
       {books.map((book) => {
         const coverId = book.cover_id || book.cover_i;
         const coverURL = coverId
-          ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`
-          : "https://via.placeholder.com/120x180?text=No+Cover";
+          ? `${import.meta.env.VITE_OL_COVER_URL}${coverId}-M.jpg`
+          : `${import.meta.env.VITE_PLACEHOLDER_URL}120x180?text=No+Cover`;
 
         const authorName = book.authors && book.authors.length > 0
           ? book.authors[0].name
@@ -27,13 +28,19 @@ function HomeBookGrid({ books }) {
         };
 
         return (
-          <div key={book.key}>
-            <div>
-              <img src={coverURL} alt={book.title} />
+          <div key={book.key} className={styles.card}>
+            <div className={styles.hoverDetails}>
               <strong>{book.title}</strong>
               <p>{authorName}</p>
             </div>
-            <AddEntryButton book={normalizedBook} />
+
+            <div className={styles.imageContainer}>
+              <img src={coverURL} alt={book.title} className={styles.cover} />
+            </div>
+
+            <div className={styles.actionContainer}>
+              <AddEntryButton book={normalizedBook} />
+            </div>
           </div>
         );
       })}

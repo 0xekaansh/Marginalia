@@ -8,6 +8,7 @@ import { useAuth } from "../context/authContext";
 function HomePage() {
   const [books, setBooks] = useState([]);
   const [genre, setGenre] = useState("science_fiction");
+  const [sortOrder, setSortOrder] = useState("trending");
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
@@ -31,7 +32,7 @@ function HomePage() {
 
       try {
         const result = await axios.get(
-          `https://openlibrary.org/subjects/${genre}.json?sort=trending&limit=10`,
+          `${import.meta.env.VITE_OL_SUBJECTS_URL}${genre}.json?sort=${sortOrder}&limit=12`,
         );
         setBooks(result.data.works || []);
       } catch (err) {
@@ -42,7 +43,7 @@ function HomePage() {
     };
 
     fetchBooksByGenre();
-  }, [genre]);
+  }, [genre, sortOrder]);
 
   return (
     <div className={styles.container}>
@@ -53,12 +54,14 @@ function HomePage() {
         </div>
         <div className={styles.heroLinks}>
           {user ? (
-            <>
-              <p>Welcome Back, <strong>{user.username}</strong></p>
-              <Link to="/register" className={styles.searchLink}>
+            <div className={styles.welcomeText}>
+              <p>
+                Welcome Back! <strong>{user.username}</strong>
+              </p>
+              <Link to="/search" className={styles.searchLink}>
                 Search Books
               </Link>
-            </>
+            </div>
           ) : (
             <Link to="/register" className={styles.joinLink}>
               Join The Club Now
@@ -67,20 +70,45 @@ function HomePage() {
         </div>
       </div>
 
-      <div className="categories">
-        <h3>Explore Categories</h3>
-        <div className="genres">
-          {genres.map((g) => (
-            <button key={g.value} onClick={() => setGenre(g.value)}>
-              {g.label}
-            </button>
-          ))}
+      <div className={styles.categories}>
+        <h3>Browse Categories</h3>
+        <div className={styles.genres}>
+          {genres.map((g) => {
+            const isActive = g.value === genre;
+            return (
+              <button
+                key={g.value}
+                onClick={() => setGenre(g.value)}
+                className={`${styles.genreButton} ${isActive ? styles.genreButtonActive : ""}`}
+              >
+                {g.label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {loading && <p>Loading books...</p>}
-
-      <HomeBookGrid books={books} />
+      <div className={styles.grid}>
+        <div className={styles.gridHeader}>
+          <div className={styles.loadingWrapper}>
+            {loading && <p>Loading books...</p>}
+          </div>
+          <div className={styles.sortContainer}>
+            <label htmlFor="sort">Sort by: </label>
+            <select
+              id="sortSelect"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+              className={styles.sortSelect}
+            >
+              <option value="trending">Trending</option>
+              <option value="new">Newest</option>
+              <option value="rating">Top Rated</option>
+            </select>
+          </div>
+        </div>
+        <HomeBookGrid books={books} />
+      </div>
     </div>
   );
 }

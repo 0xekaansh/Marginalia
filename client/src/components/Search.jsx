@@ -17,7 +17,7 @@ function Search() {
     setLoading(true);
     try {
       const result = await axios.get(
-        `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}`,
+        `${import.meta.env.VITE_OL_SEARCH_URL}${encodeURIComponent(query)}`,
       );
       const books = result.data.docs.slice(0, 10);
       navigate("/search-results", { state: { books, query } });

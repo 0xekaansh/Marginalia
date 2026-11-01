@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Chango&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-    --bg-color: #f8fafc;
+    --bg-color: #e2e8f0;
     --card-bg: #ffffff;
     --text-primary: #1e293b;
     --text-secondary: #64748b;
     --accent-color: #4f46e5;
     --accent-hover: #4338ca;
-    --border-color: #e2e8f0;
+    --border-color: #cbd5e1;
     --danger-color: #dc2626;
     --font-serif: "Bitter", serif;
     --font-sans: "Noto Sans", sans-serif;
     --font-special: "Chango", sans-serif;
-    --transition: color 0.2s ease,  background-color 0.2s ease;
+    --transition: all 0.2s ease;
 
 }
 
