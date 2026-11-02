@@ -72,3 +72,25 @@
     opacity: 1;
     pointer-events: auto;
 }
+
+.homepageAddBtn {
+    padding: 0.25rem;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--btn-bg);
+    color: var(--btn-color);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    transition: var(--transition);
+}
+
+.homepageAddBtn:hover {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+}
+
+.homepageAddBtn:focus {
+    background-color: var(--accent-hover);
+    color: var(--card-bg);
+}

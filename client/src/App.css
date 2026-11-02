@@ -6,4 +6,12 @@
 
 .mainContent {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 4rem;
+  margin: 1rem auto;
+  width: 75%;
+  border-radius: 20px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
 }

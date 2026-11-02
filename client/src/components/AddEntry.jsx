@@ -2,8 +2,9 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import styles from "./AddEntry.module.css"
 
-function AddEntryButton({ book }) {
+function AddEntryButton({ book, className }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -32,8 +33,8 @@ function AddEntryButton({ book }) {
   };
 
   return (
-    <button onClick={handleEntry} disabled={loading}>
-      {loading ? "Adding" : "+ Add to shelf"}
+    <button onClick={handleEntry} disabled={loading} className={`${styles.addBtn} ${className || ""}`}>
+      {loading ? "Adding" : "+ Add To Shelf"}
     </button>
   );
 }

@@ -1,6 +1,8 @@
+import styles from "./UserShelfList.module.css";
+
 function UserShelfList({ books }) {
   return (
-    <ul>
+    <ul className={styles.bookList}>
       {books.map((book) => {
         const coverURL = book.cover_id
           ? `https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`

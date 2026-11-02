@@ -39,7 +39,7 @@ function HomeBookGrid({ books }) {
             </div>
 
             <div className={styles.actionContainer}>
-              <AddEntryButton book={normalizedBook} />
+              <AddEntryButton book={normalizedBook} className={styles.homepageAddBtn}/>
             </div>
           </div>
         );

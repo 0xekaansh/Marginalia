@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import HomeBookGrid from "./HomeBookGrid";
 import styles from "./HomePage.module.css";
 import { useAuth } from "../context/authContext";
+import SortContainer from "./SortContainer";
 
 function HomePage() {
   const [books, setBooks] = useState([]);
@@ -46,7 +47,7 @@ function HomePage() {
   }, [genre, sortOrder]);
 
   return (
-    <div className={styles.container}>
+    <div>
       <div className={styles.heroBanner}>
         <div className={styles.heroHeading}>
           <h1>For the notes you leave in the margins of your reading life.</h1>
@@ -89,24 +90,17 @@ function HomePage() {
       </div>
 
       <div className={styles.grid}>
-        <div className={styles.gridHeader}>
-          <div className={styles.loadingWrapper}>
-            {loading && <p>Loading books...</p>}
-          </div>
-          <div className={styles.sortContainer}>
-            <label htmlFor="sort">Sort by: </label>
-            <select
-              id="sortSelect"
-              value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value)}
-              className={styles.sortSelect}
-            >
-              <option value="trending">Trending</option>
-              <option value="new">Newest</option>
-              <option value="rating">Top Rated</option>
-            </select>
-          </div>
-        </div>
+        <SortContainer
+          loading={loading}
+          sortOrder={sortOrder}
+          handleChange={(e) => setSortOrder(e.target.value)}
+          options={[
+            { value: "trending", label: "Trending" },
+            { value: "new", label: "Latest" },
+            { value: "rating", label: "Top Rated" }
+          ]}
+        />
+
         <HomeBookGrid books={books} />
       </div>
     </div>
