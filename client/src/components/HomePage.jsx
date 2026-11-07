@@ -33,7 +33,7 @@ function HomePage() {
 
       try {
         const result = await axios.get(
-          `${import.meta.env.VITE_OL_SUBJECTS_URL}${genre}.json?sort=${sortOrder}&limit=12`,
+          `${import.meta.env.VITE_OL_SUBJECTS_URL}${genre}.json?sort=${sortOrder}&limit=18`,
         );
         setBooks(result.data.works || []);
       } catch (err) {
@@ -91,6 +91,7 @@ function HomePage() {
 
       <div className={styles.grid}>
         <SortContainer
+          label="Sort By"
           loading={loading}
           sortOrder={sortOrder}
           handleChange={(e) => setSortOrder(e.target.value)}

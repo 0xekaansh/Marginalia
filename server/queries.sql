@@ -13,12 +13,16 @@ CREATE TABLE users (
 CREATE TABLE booklist (
   id SERIAL PRIMARY KEY,
   user_id INT REFERENCES users(id) ON DELETE CASCADE,
-  open_library_id VARCHAR(50) NOT NULL,
+  ol_work_key VARCHAR(50) NOT NULL,
+  ol_cover_edition_key VARCHAR(50),
   title VARCHAR(255) NOT NULL,
   author JSONB NOT NULL,
   author_key JSONB NOT NULL,
   cover_id INT,
   publish_year INT,
+  bookstatus VARCHAR(50),
   review TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  rating INT,
+  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT unique_user_work UNIQUE (user_id, ol_work_key)
 );

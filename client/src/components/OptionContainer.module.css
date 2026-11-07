@@ -1,0 +1,20 @@
+.Container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.Container select {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.Container select:hover {
+    border-color: var(--text-secondary);
+}

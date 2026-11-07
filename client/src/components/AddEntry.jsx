@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import styles from "./AddEntry.module.css"
+import styles from "./AddEntry.module.css";
 
 function AddEntryButton({ book, className }) {
   const [loading, setLoading] = useState(false);
@@ -25,15 +25,23 @@ function AddEntryButton({ book, className }) {
       );
       alert(`${book.title} added to your shelf!`);
     } catch (err) {
-      console.error("Error saving book", err);
-      alert("Failed to add book to shelf, Try again later.");
+      if (err.response && err.response.status === 400) {
+        alert("You already have this book on your shelf!");
+      } else {
+        console.error("Error adding book", err);
+        alert("Failed to add book to shelf, Try again later.");
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <button onClick={handleEntry} disabled={loading} className={`${styles.addBtn} ${className || ""}`}>
+    <button
+      onClick={handleEntry}
+      disabled={loading}
+      className={`${styles.addBtn} ${className || ""}`}
+    >
       {loading ? "Adding" : "+ Add To Shelf"}
     </button>
   );

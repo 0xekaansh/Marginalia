@@ -13,19 +13,3 @@
     font-family: var(--font-sans);
     font-size: 1.1rem;
 }
-
-.sortContainer {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.sortSelect {
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    background-color: var(--card-bg);
-    font-family: inherit;
-    font-size: 0.9rem;
-    cursor: pointer;
-}

@@ -1,3 +1,4 @@
+import OptionContainer from "./OptionContainer";
 import styles from "./SortContainer.module.css";
 
 function SortContainer(props) {
@@ -6,21 +7,13 @@ function SortContainer(props) {
       <div className={styles.loadingWrapper}>
         {props.loading && <p>Loading books...</p>}
       </div>
-      <div className={styles.sortContainer}>
-        <label htmlFor="sortSelect">Sort by: </label>
-        <select
-          id="sortSelect"
-          value={props.sortOrder}
-          onChange={props.handleChange}
-          className={styles.sortSelect}
-        >
-          {props.options.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
-      </div>
+      <OptionContainer
+        label={props.label}
+        id="sortSelect"
+        value={props.sortOrder}
+        onChange={props.handleChange}
+        options={props.options}
+      />
     </div>
   );
 }

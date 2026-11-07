@@ -20,6 +20,7 @@ function HomeBookGrid({ books }) {
         const authorKeys = authorList.map(author =>author.key.replace('/authors/', ''));
         const normalizedBook = {
           key: book.key,
+          cover_edition_key: book.cover_edition_key,
           title: book.title,
           author_name: authorNames,
           author_key: authorKeys,

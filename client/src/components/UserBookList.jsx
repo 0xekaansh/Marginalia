@@ -40,6 +40,25 @@ function UserBookList() {
     fetchBookList();
   }, []);
 
+  const sortedBooks = [...booksList].sort((a, b) => {
+    if (sortOrder === "aZ") {
+      return a.title.localeCompare(b.title);
+    }
+    if (sortOrder === "zA") {
+      return b.title.localeCompare(a.title);
+    }
+    if (sortOrder === "firstPublished") {
+      return (b.publish_year || 0) - (a.publish_year || 0);
+    }
+    if (sortOrder === "lastUpdated" || sortOrder === "trending") {
+      return new Date(b.created_at) - new Date(a.created_at);
+    }
+    if (sortOrder === "rating") {
+      return (b.rating || 0) - (a.rating || 0);
+    }
+    return 0;
+  });
+
   return (
     <div className={styles.bookShelf}>
       <section className={styles.shelfHeader}>
@@ -48,20 +67,24 @@ function UserBookList() {
 
       <div className={styles.shelfContainer}>
         <SortContainer
+          label="Sort By"
           loading={loading}
           sortOrder={sortOrder}
           handleChange={(e) => setSortOrder(e.target.value)}
           options={[
-            { value: "trending", label: "Trending" },
-            { value: "new", label: "Latest" },
-            { value: "rating", label: "Top Rated" },
+            { value: "aZ", label: "Book Title (A-Z)" },
+            { value: "zA", label: "Book Title (Z-A)" },
+            { value: "firstPublished", label: "First Published" },
+            { value: "lastUpdated", label: "Last Updated" },
+            { value: "ratingDesc", label: "Rating Highest" },
+            { value: "ratingAsc", label: "Rating Lowest" },
           ]}
         />
         {!loading && booksList.length === 0 && (
           <p>No books saved to your shelf yet.</p>
         )}
 
-        <UserShelfList books={booksList} />
+        <UserShelfList books={sortedBooks} />
       </div>
     </div>
   );

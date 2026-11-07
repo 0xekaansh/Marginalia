@@ -140,10 +140,11 @@ app.get("/api/userBookList", verifyToken, async (req, res) => {
 });
 
 // ADD BOOK IN LOGGED USER'S BOOKS LIST
-app.post("/api/addNewEntry",verifyToken, async (req, res) => {
+app.post("/api/addNewEntry", verifyToken, async (req, res) => {
   const userID = req.user.id;
   const book = req.body;
-  const OLID = book.key;
+  const olWorkKey = book.key;
+  const olEditionKey = book.cover_edition_key;
   const title = book.title;
   const author = book.author_name 
     ? JSON.stringify(Array.isArray(book.author_name) ? book.author_name : [book.author_name]) 
@@ -156,13 +157,44 @@ app.post("/api/addNewEntry",verifyToken, async (req, res) => {
 
   try {
     const result = await db.query(
-      "INSERT INTO booklist (user_id, open_library_id, title, author, author_key, cover_id, publish_year) VALUES ($1, $2, $3, $4, $5, $6, $7)",
-      [userID, OLID, title, author, authorKey, coverID, publish_year],
+      "INSERT INTO booklist (user_id, ol_work_key, ol_cover_edition_key, title, author, author_key, cover_id, publish_year) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+      [userID, olWorkKey, olEditionKey, title, author, authorKey, coverID, publish_year],
     );
     res.status(201).json({ message: "Book added to list successfully." });
   } catch (err) {
+    if (err.code === "23505") {
+      return res.status(400).json({ message: "You already have this book on your bookshelf!" });
+    }
+
     console.error("Failed to add new entry", err.stack);
     res.status(500).json({ message: "Database Insertion Error" });
+  }
+});
+
+app.put("/api/updateBook/:id", verifyToken, async (req, res) => {
+  const userID = req.user.id;
+  const bookId = req.params.id;
+  const { bookstatus, rating, review } = req.body;
+
+  try {
+    const result = await db.query(
+      `UPDATE booklist 
+       SET bookstatus = COALESCE($1, bookstatus), 
+           rating = COALESCE($2, rating), 
+           review = COALESCE($3, review)
+       WHERE id = $4 AND user_id = $5
+       RETURNING *;`,
+      [bookstatus, rating, review, bookId, userID]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Book entry not found or unauthorized." });
+    }
+
+    res.status(200).json({ message: "Book updated successfully.", book: result.rows[0] });
+  } catch (err) {
+    console.error("Failed to update book entry", err.stack);
+    res.status(500).json({ message: "Database Update Error" });
   }
 });
 
