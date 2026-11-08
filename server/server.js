@@ -171,20 +171,15 @@ app.post("/api/addNewEntry", verifyToken, async (req, res) => {
   }
 });
 
+// UPDATE DATA OF SPECIFIC BOOK IN USER'S BOOKSHELF
 app.put("/api/updateBook/:id", verifyToken, async (req, res) => {
   const userID = req.user.id;
   const bookId = req.params.id;
-  const { bookstatus, rating, review } = req.body;
+  const { bookstatus } = req.body;
 
   try {
-    const result = await db.query(
-      `UPDATE booklist 
-       SET bookstatus = COALESCE($1, bookstatus), 
-           rating = COALESCE($2, rating), 
-           review = COALESCE($3, review)
-       WHERE id = $4 AND user_id = $5
-       RETURNING *;`,
-      [bookstatus, rating, review, bookId, userID]
+    const result = await db.query(`UPDATE booklist SET bookstatus = COALESCE($1, bookstatus) WHERE id = $2 AND user_id = $3 RETURNING *`,
+      [bookstatus, bookId, userID]
     );
 
     if (result.rows.length === 0) {

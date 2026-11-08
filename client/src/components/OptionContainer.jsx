@@ -1,13 +1,12 @@
 import styles from "./OptionContainer.module.css";
 
 function OptionContainer(props) {
-  
   return (
     <div className={`${styles.Container} ${props.className || ""}`}>
       <label htmlFor={props.id}>{props.label} : </label>
       <select
         id={props.id}
-        value={props.sortOrder}
+        value={props.value}
         onChange={props.onChange}
       >
         {props.options.map((opt) => (

@@ -13,12 +13,12 @@ function UserShelfList({ books }) {
     { label: "Dropped", value: "dropped" },
   ];
 
-  const handleFieldChange = (bookId, field, value) => {
+  const handleStatusChange = (bookId, value) => {
     setBookEdits((prev) => ({
       ...prev,
       [bookId]: {
-        ...(prev[bookId] || books.find((b) => b.id === bookId)),
-        [field]: value,
+        ...prev[bookId],
+        bookstatus: value,
       },
     }));
   };
@@ -31,8 +31,8 @@ function UserShelfList({ books }) {
             ? `https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`
             : "https://via.placeholder.com/50x75?text=No+Cover";
 
-          const currentStatus =
-            bookEdits[book.id]?.bookstatus || book.bookstatus || "planToRead";
+          const currentStatus = bookEdits[book.id]?.bookstatus ?? book.bookstatus ?? "planToRead";
+
           return (
             <li key={book.id}>
               <div className={styles.listItem}>
@@ -65,23 +65,16 @@ function UserShelfList({ books }) {
                     </p>
                     <OptionContainer
                       label="Status"
-                      options={statusOptions}
+                      id={`status-${book.id}`}
                       value={currentStatus}
-                      handleChange={(e) =>
-                        handleFieldChange(book.id, "bookstatus", e.target.value)
-                      }
+                      onChange={(e) => handleStatusChange(book.id, e.target.value)}
                       className={styles.optionContainer}
+                      options={statusOptions}
                     />
                     <UpdateButton
                       bookId={book.id}
-                      updatedData={
-                        bookEdits[book.id] || {
-                          bookstatus: currentStatus,
-                          rating: book.rating,
-                          review: book.review,
-                        }
-                      }
                       bookTitle={book.title}
+                      updatedData={{ bookstatus: currentStatus }}
                     />
                   </div>
                 </div>

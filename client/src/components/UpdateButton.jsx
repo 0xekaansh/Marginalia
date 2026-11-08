@@ -19,7 +19,7 @@ function UpdateButton({ bookId, updatedData, bookTitle }) {
       await axios.put(
         `${import.meta.env.VITE_API_BASE_URL}/updateBook/${bookId}`,
         updatedData,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
       alert(`"${bookTitle}" updated successfully!`);
     } catch (error) {
@@ -31,8 +31,17 @@ function UpdateButton({ bookId, updatedData, bookTitle }) {
   };
 
   return (
-    <button className={styles.editBtn} onClick={handleUpdate} disabled={updating}>
-      {updating ? "Updating..." : <EditOutlinedIcon />}
+    <button
+      className={styles.editBtn}
+      onClick={handleUpdate}
+      disabled={updating}
+      title="Update book"
+    >
+      {updating ? ("Syncing...") : (
+        <span className={styles.btnContent}>
+          Sync <EditOutlinedIcon fontSize="small" />
+        </span>
+      )}
     </button>
   );
 }
