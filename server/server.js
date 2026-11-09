@@ -146,11 +146,15 @@ app.post("/api/addNewEntry", verifyToken, async (req, res) => {
   const olWorkKey = book.key;
   const olEditionKey = book.cover_edition_key;
   const title = book.title;
-  const author = book.author_name 
-    ? JSON.stringify(Array.isArray(book.author_name) ? book.author_name : [book.author_name]) 
+  const author = book.author_name
+    ? JSON.stringify(
+        Array.isArray(book.author_name) ? book.author_name : [book.author_name],
+      )
     : JSON.stringify(["Unknown Author"]);
-    const authorKey = book.author_key 
-    ? JSON.stringify(Array.isArray(book.author_key) ? book.author_key : [book.author_key]) 
+  const authorKey = book.author_key
+    ? JSON.stringify(
+        Array.isArray(book.author_key) ? book.author_key : [book.author_key],
+      )
     : JSON.stringify([]);
   const coverID = book.cover_i || null;
   const publish_year = book.first_publish_year || null;
@@ -158,12 +162,23 @@ app.post("/api/addNewEntry", verifyToken, async (req, res) => {
   try {
     const result = await db.query(
       "INSERT INTO booklist (user_id, ol_work_key, ol_cover_edition_key, title, author, author_key, cover_id, publish_year) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
-      [userID, olWorkKey, olEditionKey, title, author, authorKey, coverID, publish_year],
+      [
+        userID,
+        olWorkKey,
+        olEditionKey,
+        title,
+        author,
+        authorKey,
+        coverID,
+        publish_year,
+      ],
     );
     res.status(201).json({ message: "Book added to list successfully." });
   } catch (err) {
     if (err.code === "23505") {
-      return res.status(400).json({ message: "You already have this book on your bookshelf!" });
+      return res
+        .status(400)
+        .json({ message: "You already have this book on your bookshelf!" });
     }
 
     console.error("Failed to add new entry", err.stack);
@@ -175,18 +190,23 @@ app.post("/api/addNewEntry", verifyToken, async (req, res) => {
 app.put("/api/updateBook/:id", verifyToken, async (req, res) => {
   const userID = req.user.id;
   const bookId = req.params.id;
-  const { bookstatus } = req.body;
+  const { bookstatus, rating } = req.body;
 
   try {
-    const result = await db.query(`UPDATE booklist SET bookstatus = COALESCE($1, bookstatus) WHERE id = $2 AND user_id = $3 RETURNING *`,
-      [bookstatus, bookId, userID]
+    const result = await db.query(
+      `UPDATE booklist SET bookstatus = COALESCE($1, bookstatus), rating = COALESCE($2, rating) WHERE id = $3 AND user_id = $4 RETURNING *`,
+      [bookstatus, rating, bookId, userID],
     );
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: "Book entry not found or unauthorized." });
+      return res
+        .status(404)
+        .json({ message: "Book entry not found or unauthorized." });
     }
 
-    res.status(200).json({ message: "Book updated successfully.", book: result.rows[0] });
+    res
+      .status(200)
+      .json({ message: "Book updated successfully.", book: result.rows[0] });
   } catch (err) {
     console.error("Failed to update book entry", err.stack);
     res.status(500).json({ message: "Database Update Error" });

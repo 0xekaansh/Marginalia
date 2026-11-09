@@ -12,13 +12,21 @@ function UserShelfList({ books }) {
     { label: "On-Hold", value: "onHold" },
     { label: "Dropped", value: "dropped" },
   ];
+  const ratingOptions = [
+    { label: "Not Rated", value: null },
+    { label: "⭐ 5 - Masterpiece", value: "5" },
+    { label: "⭐ 4 - Highly Recommended", value: "4" },
+    { label: "⭐ 3 - Good", value: "3" },
+    { label: "⭐ 2 - Average", value: "2" },
+    { label: "⭐ 1 - Not for me", value: "1" },
+  ];
 
-  const handleStatusChange = (bookId, value) => {
+  const handleFieldChange = (bookId, field, value) => {
     setBookEdits((prev) => ({
       ...prev,
       [bookId]: {
         ...prev[bookId],
-        bookstatus: value,
+        [field]: value,
       },
     }));
   };
@@ -31,7 +39,10 @@ function UserShelfList({ books }) {
             ? `https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`
             : "https://via.placeholder.com/50x75?text=No+Cover";
 
-          const currentStatus = bookEdits[book.id]?.bookstatus ?? book.bookstatus ?? "planToRead";
+          const currentStatus =
+            bookEdits[book.id]?.bookstatus ?? book.bookstatus ?? "planToRead";
+          const currentScore =
+            bookEdits[book.id]?.rating ?? book.rating ?? null;
 
           return (
             <li key={book.id}>
@@ -67,14 +78,29 @@ function UserShelfList({ books }) {
                       label="Status"
                       id={`status-${book.id}`}
                       value={currentStatus}
-                      onChange={(e) => handleStatusChange(book.id, e.target.value)}
+                      onChange={(e) =>
+                        handleFieldChange(book.id, "bookstatus", e.target.value)
+                      }
                       className={styles.optionContainer}
                       options={statusOptions}
+                    />
+                    <OptionContainer
+                      label="Your Score"
+                      id={`score-${book.id}`}
+                      value={currentScore}
+                      onChange={(e) =>
+                        handleFieldChange(book.id, "rating", e.target.value)
+                      }
+                      className={styles.optionContainer}
+                      options={ratingOptions}
                     />
                     <UpdateButton
                       bookId={book.id}
                       bookTitle={book.title}
-                      updatedData={{ bookstatus: currentStatus }}
+                      updatedData={{
+                        bookstatus: currentStatus,
+                        rating: currentScore,
+                      }}
                     />
                   </div>
                 </div>

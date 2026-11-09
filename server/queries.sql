@@ -21,7 +21,7 @@ CREATE TABLE booklist (
   cover_id INT,
   publish_year INT,
   bookstatus VARCHAR(50),
-  review TEXT,
+  notes TEXT,
   rating INT,
   created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT unique_user_work UNIQUE (user_id, ol_work_key)
