@@ -1,10 +1,10 @@
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import styles from "./UpdateButton.module.css";
 import { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import CloudDownloadOutlinedIcon from '@mui/icons-material/CloudDownloadOutlined';
 
-function UpdateButton({ bookId, updatedData, bookTitle }) {
+function UpdateButton({ bookId, updatedData, bookTitle, className }) {
   const [updating, setUpdating] = useState(false);
 
   const handleUpdate = async () => {
@@ -32,14 +32,14 @@ function UpdateButton({ bookId, updatedData, bookTitle }) {
 
   return (
     <button
-      className={styles.editBtn}
+      className={`${styles.editBtn} ${className || ""}`}
       onClick={handleUpdate}
       disabled={updating}
       title="Update book"
     >
       {updating ? ("Syncing...") : (
         <span className={styles.btnContent}>
-          Sync <EditOutlinedIcon fontSize="small" />
+        <CloudDownloadOutlinedIcon/>  Sync
         </span>
       )}
     </button>

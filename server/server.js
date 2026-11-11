@@ -190,12 +190,12 @@ app.post("/api/addNewEntry", verifyToken, async (req, res) => {
 app.put("/api/updateBook/:id", verifyToken, async (req, res) => {
   const userID = req.user.id;
   const bookId = req.params.id;
-  const { bookstatus, rating } = req.body;
+  const { bookstatus, rating, notes } = req.body;
 
   try {
     const result = await db.query(
-      `UPDATE booklist SET bookstatus = COALESCE($1, bookstatus), rating = COALESCE($2, rating) WHERE id = $3 AND user_id = $4 RETURNING *`,
-      [bookstatus, rating, bookId, userID],
+      `UPDATE booklist SET bookstatus = COALESCE($1, bookstatus), rating = COALESCE($2, rating), notes = COALESCE($3, notes) WHERE id = $4 AND user_id = $5 RETURNING *`,
+      [bookstatus, rating, notes, bookId, userID],
     );
 
     if (result.rows.length === 0) {

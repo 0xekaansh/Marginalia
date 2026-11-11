@@ -1,0 +1,204 @@
+.listItem {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: var(--list-bg-color);
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.cardMain {
+    display: flex;
+    gap: 1.25rem;
+    width: 100%;
+}
+
+.bookDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    min-width: 0;
+    flex: 1;
+    gap: 1.5rem;
+}
+
+.bookData {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+    padding: 1rem;
+}
+
+.bookTitle {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    word-break: break-word;
+}
+
+.bookData p {
+    margin-top: 0.3rem;
+}
+
+.bookAction {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    text-align: right;
+}
+
+.bookAction p {
+    font-family: inherit;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0.3rem;
+}
+
+.optionContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.optionContainer label {
+    font-size: 0.85rem;
+    font-family: inherit;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.optionContainer select {
+    padding: 0.25rem 0.75rem;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    width: 63%;
+}
+
+.optionContainer select:hover {
+    border-color: var(--text-primary);
+}
+
+.optionContainer select:focus {
+    outline: none;
+    border-color: var(--text-primary);
+}
+
+.noteToggleBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    background-color: transparent;
+    color: var(--accent-color);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: var(--transition);
+    width: auto;
+    margin-top: 0.2rem;
+}
+
+.noteToggleBtn:hover {
+    background-color: var(--btn-bg);
+    border-color :var(--accent-hover);
+    color: var(--accent-hover);
+}
+
+.updateBtn {
+    width:auto !important;
+    background-color: transparent !important;
+    color: var(--accent-color) !important;
+    border-radius: 20px !important;
+    padding: 0.35rem 0.75rem !important;
+}
+
+.updateBtn:hover {
+    background-color: var(--accent-hover) !important;
+    color: var(--card-bg) !important;
+}
+
+.noteSection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.noteSection label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.noteTextarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.9rem;
+    resize: vertical;
+}
+
+.noteTextarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.noteHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.editNoteBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid var(--accent-color);
+    border-radius: 25px;
+    color: var(--accent-color);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.35rem;
+}
+
+.editNoteBtn:hover {
+    color: var(--card-bg);
+    background-color: var(--accent-hover);
+}
+
+.editOff {
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+.editOff:hover {
+    background-color: var(--danger-color);
+}
+
+.noteDisplay {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    background-color: var(--card-bg);
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    white-space: pre-wrap;
+    margin: 0;
+}

@@ -4,3 +4,36 @@
     justify-content: center;
     gap: 0.4rem;
 }
+
+.editBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background-color: var(--text-primary);
+    color: var(--card-bg);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.1s ease;
+    width: 100%;
+}
+
+.editBtn:active {
+    transform: scale(0.98);
+}
+
+.editBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btnContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
