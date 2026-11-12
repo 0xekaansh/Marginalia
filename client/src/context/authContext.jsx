@@ -9,19 +9,27 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = Cookies.get("token");
-    if (token) {
-      setUser({ token });
+    const savedUser = Cookies.get("user");
+    if (token && savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (err) {
+        console.error("Failed to parse user cookie", err);
+        setUser({ token });
+      }
     }
     setLoading(false);
   }, []);
 
   const login = (token, userData) => {
     Cookies.set("token", token, { expires: 1, sameSite: "lax" });
+    Cookies.set("user", JSON.stringify({ token, ...userData }), { expires: 1, sameSite: "lax" });
     setUser({ token, ...userData });
   };
 
   const logout = () => {
     Cookies.remove("token");
+    Cookies.remove("user");
     setUser(null);
   };
 

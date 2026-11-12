@@ -7,6 +7,7 @@ import { formatAuthors } from "../utils/formatter";
 import NotesOutlinedIcon from "@mui/icons-material/NotesOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
+import BookNotes from "./BookNotes";
 
 function UserBookCard({
   book,
@@ -80,40 +81,14 @@ function UserBookCard({
         </div>
 
         {isNoteOpen && (
-          <div className={styles.noteSection}>
-            <div className={styles.noteHeader}>
-              <label>Your Notes & Review:</label>
-
-              {isEditingNote ? (
-                <button className={`${styles.editNoteBtn} ${styles.editOff}`} onClick={toggleEdit}>
-                  <EditOffOutlinedIcon fontSize="medium" />{" "}
-                </button>
-              ) : (
-                <button className={styles.editNoteBtn} onClick={toggleEdit}>
-                  {" "}
-                  <EditOutlinedIcon fontSize="medium" />{" "}
-                </button>
-              )}
-            </div>
-
-            {isEditingNote ? (
-              <textarea
-                id={`notes-${book.id}`}
-                value={currentNotes}
-                onChange={(e) =>
-                  handleFieldChange(book.id, "notes", e.target.value)
-                }
-                placeholder="Leave notes in the margins of your reading life..."
-                rows={4}
-                className={styles.noteTextarea}
-              />
-            ) : (
-              <p className={styles.noteDisplay}>
-                {currentNotes ||
-                  "No notes added yet. Click 'Edit / Add' to write your notes."}
-              </p>
-            )}
-          </div>
+          <BookNotes
+            bookId={book.id}
+            currentNotes={currentNotes}
+            isNoteOpen={isNoteOpen}
+            isEditingNote={isEditingNote}
+            toggleEdit={toggleEdit}
+            handleFieldChange={handleFieldChange}
+          />
         )}
       </div>
     </li>

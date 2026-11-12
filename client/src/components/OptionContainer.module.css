@@ -9,10 +9,17 @@
     border-radius: 8px;
     border: 1px solid var(--border-color);
     background-color: var(--card-bg);
-    font-family: inherit;
+    font-family: var(--font-sans);
     font-size: 0.9rem;
+    font-weight: 400;
     cursor: pointer;
     transition: var(--transition);
+}
+
+.Container select option {
+    font-size: 0.85rem;
+    font-family: inherit;
+    font-weight: 400;
 }
 
 .Container select:hover {

@@ -95,7 +95,7 @@
     gap: 0.4rem;
     padding: 0.35rem 0.75rem;
     border-radius: 20px;
-    border: 1px solid transparent;
+    border: 1px solid var(--accent-color);
     background-color: transparent;
     color: var(--accent-color);
     cursor: pointer;
@@ -115,8 +115,8 @@
 
 .updateBtn {
     width:auto !important;
-    background-color: transparent !important;
-    color: var(--accent-color) !important;
+    background-color: var(--accent-color) !important;
+    color: var(--card-bg) !important;
     border-radius: 20px !important;
     padding: 0.35rem 0.75rem !important;
 }
