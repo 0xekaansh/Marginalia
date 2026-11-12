@@ -189,13 +189,16 @@ app.post("/api/addNewEntry", verifyToken, async (req, res) => {
 // UPDATE DATA OF SPECIFIC BOOK IN USER'S BOOKSHELF
 app.put("/api/updateBook/:id", verifyToken, async (req, res) => {
   const userID = req.user.id;
-  const bookId = req.params.id;
+  const bookID = req.params.id;
+  if (isNaN(bookID)) {
+    return res.status(400).json({ message: "Invalid book ID format." });
+  }
   const { bookstatus, rating, notes } = req.body;
 
   try {
     const result = await db.query(
       `UPDATE booklist SET bookstatus = COALESCE($1, bookstatus), rating = COALESCE($2, rating), notes = COALESCE($3, notes) WHERE id = $4 AND user_id = $5 RETURNING *`,
-      [bookstatus, rating, notes, bookId, userID],
+      [bookstatus, rating, notes, bookID, userID],
     );
 
     if (result.rows.length === 0) {
@@ -204,12 +207,35 @@ app.put("/api/updateBook/:id", verifyToken, async (req, res) => {
         .json({ message: "Book entry not found or unauthorized." });
     }
 
-    res
-      .status(200)
-      .json({ message: "Book updated successfully.", book: result.rows[0] });
+    res.json({ message: "Book updated successfully.", book: result.rows[0] });
   } catch (err) {
     console.error("Failed to update book entry", err.stack);
     res.status(500).json({ message: "Database Update Error" });
+  }
+});
+
+// DELETE BOOK FROM USER'S BOOKSHELF
+app.delete("/api/deleteBook/:id", verifyToken, async (req, res) => {
+  const userID = req.user.id;
+  const bookID = req.params.id;
+  if (isNaN(bookID)) {
+    return res.status(400).json({ message: "Invalid book ID format." });
+  }
+
+  try {
+    const result = await db.query(
+      "DELETE FROM booklist WHERE id = $1 AND user_id = $2 RETURNING *",
+      [bookID, userID],
+    );
+    if (result.rowCount === 0) {
+      return res
+        .status(404)
+        .json({ message: "Book entry not found or unauthorized." });
+    }
+    res.json({ message: "Book deleted successfully" });
+  } catch (err) {
+    console.error("Failed to delete book entry", err.stack);
+    res.status(500).json({ message: "Database deletion Error" });
   }
 });
 

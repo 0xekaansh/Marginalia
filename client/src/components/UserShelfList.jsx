@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./UserShelfList.module.css";
 import UserBookCard from "./UserBookCard";
 
-function UserShelfList({ books }) {
+function UserShelfList({ books, onDeleteBook }) {
   const [bookEdits, setBookEdits] = useState({});
   const [showNotes, setShowNotes] = useState({});
   const [editingNotes, setEditingNotes] = useState({});
@@ -44,6 +44,7 @@ function UserShelfList({ books }) {
             toggleNote={() => toggleNotes(book.id)}
             isEditingNote={!!editingNotes[book.id]}
             toggleEdit={() => toggleEditMode(book.id)}
+            onDelete={onDeleteBook}
           />
         ))}
       </ul>

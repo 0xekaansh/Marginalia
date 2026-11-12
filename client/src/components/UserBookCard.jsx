@@ -8,6 +8,7 @@ import NotesOutlinedIcon from "@mui/icons-material/NotesOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
 import BookNotes from "./BookNotes";
+import DeleteButton from "./DeleteButton";
 
 function UserBookCard({
   book,
@@ -17,6 +18,7 @@ function UserBookCard({
   toggleNote,
   isEditingNote,
   toggleEdit,
+  onDelete,
 }) {
   const currentStatus =
     bookEdits[book.id]?.bookstatus ?? book.bookstatus ?? "planToRead";
@@ -66,16 +68,24 @@ function UserBookCard({
               <button className={styles.noteToggleBtn} onClick={toggleNote}>
                 <NotesOutlinedIcon /> {isNoteOpen ? "Hide Notes" : "Show Notes"}
               </button>
-              <UpdateButton
-                bookId={book.id}
-                bookTitle={book.title}
-                updatedData={{
-                  bookstatus: currentStatus,
-                  rating: currentScore,
-                  notes: currentNotes,
-                }}
-                className={styles.updateBtn}
-              />
+              <div className={styles.actionBtnContainer}>
+                <UpdateButton
+                  bookId={book.id}
+                  bookTitle={book.title}
+                  updatedData={{
+                    bookstatus: currentStatus,
+                    rating: currentScore,
+                    notes: currentNotes,
+                  }}
+                  className={styles.updateBtn}
+                />
+                <DeleteButton
+                  bookId={book.id}
+                  bookTitle={book.title}
+                  onDelete={onDelete}
+                  className={styles.deleteBtn}
+                />
+              </div>
             </div>
           </div>
         </div>

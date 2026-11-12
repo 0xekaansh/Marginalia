@@ -59,6 +59,12 @@ function UserBookList() {
     return 0;
   });
 
+  const handleRemoveBook = (deletedBookId) => {
+    setBooksList((prevBooks) =>
+      prevBooks.filter((book) => book.id !== deletedBookId),
+    );
+  };
+
   return (
     <div className={styles.bookShelf}>
       <section className={styles.shelfHeader}>
@@ -84,7 +90,7 @@ function UserBookList() {
           <p>No books saved to your shelf yet.</p>
         )}
 
-        <UserShelfList books={sortedBooks} />
+        <UserShelfList books={sortedBooks} onDeleteBook={handleRemoveBook} />
       </div>
     </div>
   );
