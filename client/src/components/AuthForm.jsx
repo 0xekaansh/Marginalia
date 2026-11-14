@@ -5,6 +5,7 @@ import { useAuth } from "../context/authContext";
 import Input from "./Input";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import styles from "./AuthForm.module.css";
 
 function AuthForm({ isRegister = false }) {
   const [formData, setFormData] = useState({
@@ -88,13 +89,16 @@ function AuthForm({ isRegister = false }) {
   };
 
   return (
-    <div>
-      <h1>{isRegister ? "Register" : "Login"}</h1>
+    <div className={styles.authFormContainer}>
+      <h1 className={styles.authFormHeading}>
+        {isRegister ? "Register" : "Login"}
+      </h1>
       {errors.form && <div>{errors.form}</div>}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.formContent}>
         {isRegister && (
           <Input
             label="Username"
+            autoComplete="username"
             type="text"
             name="username"
             placeholder="Username"
@@ -105,6 +109,7 @@ function AuthForm({ isRegister = false }) {
         )}
         <Input
           label="Email"
+          autoComplete="email"
           type="text"
           name="email"
           placeholder="name@example.com"
@@ -112,9 +117,10 @@ function AuthForm({ isRegister = false }) {
           onChange={handleChange}
           error={errors.email}
         />
-        <div>
+        <div className={styles.passwordWrapper}>
           <Input
             label="Password"
+            autoComplete="password"
             type={!showPassword ? "password" : "text"}
             name="password"
             placeholder="********"
@@ -128,16 +134,17 @@ function AuthForm({ isRegister = false }) {
             aria-label={showPassword ? "Hide password" : "Show password"}
           >
             {showPassword ? (
-              <VisibilityOffOutlinedIcon />
+              <VisibilityOffOutlinedIcon fontSize="small" />
             ) : (
-              <VisibilityOutlinedIcon />
+              <VisibilityOutlinedIcon fontSize="small" />
             )}
           </button>
         </div>
         {isRegister && (
-          <div>
+          <div className={styles.passwordWrapper}>
             <Input
               label="Confirm Password"
+              autoComplete="new-password"
               type={!showConfirmPassword ? "password" : "text"}
               name="confirmPassword"
               placeholder="********"
@@ -148,30 +155,32 @@ function AuthForm({ isRegister = false }) {
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+              aria-label={
+                showConfirmPassword ? "Hide password" : "Show password"
+              }
             >
               {showConfirmPassword ? (
-                <VisibilityOffOutlinedIcon />
+                <VisibilityOffOutlinedIcon fontSize="small" />
               ) : (
-                <VisibilityOutlinedIcon />
+                <VisibilityOutlinedIcon fontSize="small" />
               )}
             </button>
           </div>
         )}
 
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={loading} className={styles.submitBtn}>
           {isRegister ? "Register" : "Log In"}
         </button>
       </form>
 
       <div>
         {isRegister ? (
-          <p>
-            Already have an account? <Link to="/login">Login</Link>
+          <p className={styles.footerText}>
+            Already have an account ? <Link to="/login">Login</Link>
           </p>
         ) : (
-          <p>
-            Don't have an account? <Link to="/register">Register</Link>
+          <p className={styles.footerText}>
+            Don't have an account ? <Link to="/register">Register</Link>
           </p>
         )}
       </div>

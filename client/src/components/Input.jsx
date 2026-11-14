@@ -1,7 +1,9 @@
+import styles from "./Input.module.css";
+
 function Input(props) {
   return (
-    <div>
-      <label htmlFor={props.type}>{props.label}</label>
+    <div className={styles.inputContainer}>
+      <label htmlFor={props.name}>{props.label}</label>
       <input
         id={props.name}
         type={props.type}
@@ -9,8 +11,9 @@ function Input(props) {
         placeholder={props.placeholder}
         value={props.value}
         onChange={props.onChange}
+        autoComplete={props.autoComplete}
       />
-      {props.error && <span>{props.error}</span>}
+      {props.error && <span className={styles.errorText}>{props.error}</span>}
     </div>
   );
 }
