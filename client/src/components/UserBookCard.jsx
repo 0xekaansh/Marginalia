@@ -5,8 +5,6 @@ import RatingOptions from "./RatingOptions";
 import UpdateButton from "./UpdateButton";
 import { formatAuthors } from "../utils/formatter";
 import NotesOutlinedIcon from "@mui/icons-material/NotesOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
 import BookNotes from "./BookNotes";
 import DeleteButton from "./DeleteButton";
 

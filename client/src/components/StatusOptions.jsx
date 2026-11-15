@@ -2,8 +2,8 @@ import OptionContainer from "./OptionContainer";
 
 function StatusOptions(props) {
   const statusOptions = [
-    { label: "Completed", value: "completed" },
     { label: "Plan to read", value: "planToRead" },
+    { label: "Completed", value: "completed" },
     { label: "Reading", value: "reading" },
     { label: "On-Hold", value: "onHold" },
     { label: "Dropped", value: "dropped" },

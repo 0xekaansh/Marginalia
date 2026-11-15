@@ -1,0 +1,19 @@
+.addBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    border: 2px solid var(--accent-color);
+    border-radius: 20px;
+    color: var(--accent-color);
+    background-color: transparent;
+    transition: var(--transition);
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+.addBtn:hover {
+    background-color: var(--accent-hover);
+    color: var(--card-bg);
+}

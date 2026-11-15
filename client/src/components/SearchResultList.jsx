@@ -1,22 +1,20 @@
 import AddEntryButton from "./AddEntry";
+import BookCover from "./BookCover";
+import { formatAuthors } from "../utils/formatter";
+import styles from "./SearchResultList.module.css";
 
 function SearchResultList({ books }) {
   return (
-    <ul>
+    <ul className={styles.list}>
       {books.map((book, index) => {
-        const coverURL = book.cover_i
-          ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-          : "https://via.placeholder.com/50x75?text=No+Cover";
-
         return (
-          <li key={book.key || index}>
-            <img src={coverURL} alt={book.title} />
-            <div>
-              <strong>{book.title}</strong>
-              <p>
-                {book.author_name ? book.author_name.join(", ") : "Unknown Author"}{" "}
-                {book.first_publish_year || "N/A"}
-              </p>
+          <li key={book.key || index} className={styles.listItem}>
+            <BookCover coverId={book.cover_i} title={book.title} />
+
+            <div className={styles.bookData}>
+              <strong className={styles.bookTitle}>{book.title}</strong>
+              <p>by {formatAuthors(book.author_name)}</p>
+              <p>First published in {book.first_publish_year || null}</p>
             </div>
             <AddEntryButton book={book} />
           </li>

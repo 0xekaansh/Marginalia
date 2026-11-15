@@ -1,0 +1,44 @@
+.list {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 0 0 2rem 0;
+}
+
+.listItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    gap: 1.5rem;
+}
+
+.listItem:hover {
+    border-color: var(--accent-color);
+}
+
+.bookData {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+}
+
+.bookTitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.bookData p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+}

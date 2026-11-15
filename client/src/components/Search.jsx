@@ -5,7 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import LoadingSpinner from "../assets/LoadingSpinner";
 import { useNavigate } from "react-router-dom";
 
-function Search() {
+function Search(props) {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ function Search() {
   };
 
   return (
-    <div className={styles.search}>
+    <div className={`${styles.search} ${props.className}`}>
       {/* Book Search Form */}
       <form className={styles.searchForm} onSubmit={bookSearch}>
         <input
@@ -38,7 +38,7 @@ function Search() {
           type="text"
           name="Search"
           placeholder="Search by book title or author"
-          value={query}
+          value={props.query ? props.query : query}
           onChange={(e) => {
             setQuery(e.target.value);
           }}
