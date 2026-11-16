@@ -7,8 +7,8 @@ function HomeBookGrid({ books }) {
       {books.map((book) => {
         const coverId = book.cover_id || book.cover_i;
         const coverURL = coverId
-          ? `${import.meta.env.VITE_OL_COVER_URL}${coverId}-M.jpg`
-          : `${import.meta.env.VITE_PLACEHOLDER_URL}120x180?text=No+Cover`;
+          ? `${import.meta.env.VITE_OL_COVER_URL}/${coverId}-M.jpg`
+          : `${import.meta.env.VITE_PLACEHOLDER_URL}/120x180?text=No+Cover`;
 
         const authorName = book.authors && book.authors.length > 0
           ? book.authors[0].name

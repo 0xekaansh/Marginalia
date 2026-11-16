@@ -23,5 +23,6 @@
 }
 
 .Container select:hover {
-    border-color: var(--text-secondary);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    border-color: var(--accent-color);
 }

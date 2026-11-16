@@ -33,7 +33,7 @@ function HomePage() {
 
       try {
         const result = await axios.get(
-          `${import.meta.env.VITE_OL_SUBJECTS_URL}${genre}.json?sort=${sortOrder}&limit=18`,
+          `${import.meta.env.VITE_OL_SUBJECTS_URL}/${genre}.json?sort=${sortOrder}&limit=18`,
         );
         setBooks(result.data.works || []);
       } catch (err) {

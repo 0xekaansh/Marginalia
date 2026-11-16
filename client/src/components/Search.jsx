@@ -17,7 +17,7 @@ function Search(props) {
     setLoading(true);
     try {
       const result = await axios.get(
-        `${import.meta.env.VITE_OL_SEARCH_URL}${encodeURIComponent(query)}`,
+        `${import.meta.env.VITE_OL_SEARCH_URL}?q=${encodeURIComponent(query)}&sort=rating`,
       );
       const books = result.data.docs.slice(0, 10);
       navigate("/search-results", { state: { books, query } });
@@ -31,14 +31,13 @@ function Search(props) {
 
   return (
     <div className={`${styles.search} ${props.className}`}>
-      {/* Book Search Form */}
       <form className={styles.searchForm} onSubmit={bookSearch}>
         <input
           className={styles.searchInput}
           type="text"
           name="Search"
           placeholder="Search by book title or author"
-          value={props.query ? props.query : query}
+          value={query}
           onChange={(e) => {
             setQuery(e.target.value);
           }}

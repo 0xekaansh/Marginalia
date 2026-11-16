@@ -16,9 +16,9 @@
     font-weight: 500;
     font-size: 0.85rem;
     padding: 0.75rem 2.5rem 0.75rem 1rem;
-    border: 1.5px solid var(--bg-color);
+    border: 1.5px solid var(--border-color);
     background-color: transparent;
-    border-radius: 20px;
+    border-radius: 8px;
     transition: var(--transition);
 }
 
@@ -62,4 +62,10 @@
 .smallSpinner svg {
     height: 30px;
     width: 30px;
+}
+
+.pageSearch {
+    display: flex;
+    align-items: center;
+    position: relative;
 }

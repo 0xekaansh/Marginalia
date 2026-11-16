@@ -2,8 +2,8 @@ import styles from "./BookCover.module.css";
 
 function BookCover({ coverId, title }) {
   const coverURL = coverId
-    ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`
-    : "https://via.placeholder.com/50x75?text=No+Cover";
+    ? `${import.meta.env.VITE_OL_COVER_URL}/${coverId}-M.jpg`
+    : `${import.meta.env.VITE_PLACEHOLDER_URL}/100x150?text=Cover+Not+Found`;
 
   return (
     <div className={styles.coverContainer}>

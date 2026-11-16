@@ -1,6 +1,6 @@
 .heroBanner {
     display: flex;
-    border-radius: 20px;
+    border-radius: 12px;
     margin: 1rem;
     justify-content: space-between;
     align-items: center;
