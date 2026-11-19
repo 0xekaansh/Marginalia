@@ -142,7 +142,7 @@ app.get("/api/userBookList", verifyToken, async (req, res) => {
 // ADD BOOK IN LOGGED USER'S BOOKS LIST
 app.post("/api/addNewEntry", verifyToken, async (req, res) => {
   const userID = req.user.id;
-  const book = req.body;
+  const { book, status } = req.body;
   const olWorkKey = book.key;
   const olEditionKey = book.cover_edition_key;
   const title = book.title;
@@ -161,7 +161,7 @@ app.post("/api/addNewEntry", verifyToken, async (req, res) => {
 
   try {
     const result = await db.query(
-      "INSERT INTO booklist (user_id, ol_work_key, ol_cover_edition_key, title, author, author_key, cover_id, publish_year) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+      "INSERT INTO booklist (user_id, ol_work_key, ol_cover_edition_key, title, author, author_key, cover_id, publish_year, bookstatus) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
       [
         userID,
         olWorkKey,
@@ -171,6 +171,7 @@ app.post("/api/addNewEntry", verifyToken, async (req, res) => {
         authorKey,
         coverID,
         publish_year,
+        status,
       ],
     );
     res.status(201).json({ message: "Book added to list successfully." });

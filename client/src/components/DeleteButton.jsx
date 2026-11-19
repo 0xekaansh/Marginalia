@@ -5,7 +5,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import styles from "./DeleteButton.module.css";
 
-function DeleteButton({ bookId, bookTitle, onDelete, className }) {
+function DeleteButton({ bookId, onDelete, className, onSuccess }) {
   const [deleting, setDeleting] = useState(false);
 
   const handleDelete = async () => {
@@ -21,6 +21,7 @@ function DeleteButton({ bookId, bookTitle, onDelete, className }) {
         `${import.meta.env.VITE_API_BASE_URL}/deleteBook/${bookId}`,
         { headers: { Authorization: `Bearer ${token}` } },
       );
+      onSuccess?.();
       if (onDelete) {
         onDelete(bookId);
       }
@@ -38,7 +39,8 @@ function DeleteButton({ bookId, bookTitle, onDelete, className }) {
       onClick={handleDelete}
       disabled={deleting}
       title="Delete book"
-    ><DeleteOutlinedIcon /> Delete
+    >
+      <DeleteOutlinedIcon /> Delete
     </button>
   );
 }

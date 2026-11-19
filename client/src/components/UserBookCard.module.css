@@ -51,11 +51,13 @@
     text-align: right;
 }
 
-.bookAction p {
-    font-family: inherit;
-    font-size: 0.85rem;
+.shelfDate {
+    font-size: 0.75rem;
     color: var(--text-secondary);
-    margin: 0.3rem;
+    margin-bottom: 0.25rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    width: 100%;
 }
 
 .optionContainer {
@@ -112,19 +114,6 @@
     background-color: var(--btn-bg);
     border-color :var(--accent-hover);
     color: var(--accent-hover);
-}
-
-.updateBtn {
-    width:auto !important;
-    background-color: var(--accent-color) !important;
-    color: var(--card-bg) !important;
-    border-radius: 20px !important;
-    padding: 0.35rem 0.75rem !important;
-}
-
-.updateBtn:hover {
-    background-color: var(--accent-hover) !important;
-    color: var(--card-bg) !important;
 }
 
 .noteSection {

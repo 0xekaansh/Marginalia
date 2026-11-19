@@ -35,16 +35,17 @@ function UserBookCard({
               <p>First published in {book.publish_year || null}</p>
             </div>
             <div className={styles.bookAction}>
-              <p>
-                Added to shelf on{" "}
-                <strong>
-                  {new Date(book.created_at).toLocaleDateString("en-US", {
+              <span className={styles.shelfDate}>
+                Added on{" "}
+                {new Date(book.created_at).toLocaleDateString(
+                  "en-US",
+                  {
                     year: "numeric",
                     month: "short",
                     day: "numeric",
-                  })}
-                </strong>
-              </p>
+                  },
+                )}
+              </span>
               <StatusOptions
                 label="Status"
                 id={`status-${book.id}`}

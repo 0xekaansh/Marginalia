@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import styles from "./AddEntry.module.css";
 
-function AddEntryButton({ book, className }) {
+function AddEntryButton({ book, status, className, onSuccess }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -20,9 +20,10 @@ function AddEntryButton({ book, className }) {
     try {
       const result = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/addNewEntry`,
-        book,
+        { book, status },
         { headers: { Authorization: `Bearer ${token}` } },
       );
+      onSuccess?.()
       alert(`${book.title} added to your shelf!`);
     } catch (err) {
       if (err.response && err.response.status === 400) {
