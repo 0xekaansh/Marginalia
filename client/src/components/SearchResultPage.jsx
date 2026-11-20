@@ -60,10 +60,10 @@ function SearchResultsPage() {
 
   useEffect(() => {
     if (!urlQuery) return;
-  
+
     setQuery(urlQuery);
     setSortOrder(urlSort);
-  
+
     if (location.state?.books && location.state?.query === urlQuery) {
       setBooks(location.state.books);
     } else {
@@ -74,12 +74,18 @@ function SearchResultsPage() {
   const handleNewSearch = (newQuery) => {
     const trimmed = newQuery.trim();
     if (!trimmed) return;
-    setSearchParams({ q: trimmed, sort: sortOrder }, { replace: true });
+    setSearchParams(
+      { q: trimmed, sort: sortOrder },
+      { replace: true, state: null },
+    );
   };
 
   const handleSortChange = (e) => {
     const newSort = e.target.value;
-    setSearchParams({ q: query, sort: newSort }, { replace: true });
+    setSearchParams(
+      { q: urlQuery || query, sort: newSort },
+      { replace: true, state: null },
+    );
   };
 
   return (
