@@ -9,7 +9,7 @@ import SortContainer from "./SortContainer";
 function UserBookList() {
   const [loading, setLoading] = useState(false);
   const [booksList, setBooksList] = useState([]);
-  const [sortOrder, setSortOrder] = useState("trending");
+  const [sortOrder, setSortOrder] = useState("lastUpdated");
   const navigate = useNavigate();
 
   useEffect(() => {

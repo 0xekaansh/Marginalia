@@ -16,11 +16,15 @@ function Search(props) {
 
     setLoading(true);
     try {
+      const trimmedQuery = query.trim();
       const result = await axios.get(
-        `${import.meta.env.VITE_OL_SEARCH_URL}?q=${encodeURIComponent(query)}&sort=rating`,
+        `${import.meta.env.VITE_OL_SEARCH_URL}?q=${encodeURIComponent(trimmedQuery)}&sort=rating`,
       );
       const books = result.data.docs.slice(0, 10);
-      navigate("/search-results", { state: { books, query } });
+      navigate(
+        `/search-results?q=${encodeURIComponent(trimmedQuery)}&sort=rating`,
+        { state: { books, query: trimmedQuery } },
+      );
     } catch (err) {
       console.error("Error fetching data from Open Library API", err);
     } finally {

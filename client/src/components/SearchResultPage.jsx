@@ -14,7 +14,7 @@ function SearchResultsPage() {
   const urlQuery = searchParams.get("q") || "";
   const urlSort = searchParams.get("sort") || "rating";
   const [books, setBooks] = useState(location.state?.books || []);
-  const [query, setQuery] = useState(location.state?.query || "");
+  const [query, setQuery] = useState(urlQuery || location.state?.query || "");
   const [sortOrder, setSortOrder] = useState(urlSort);
   const [userBookList, setUserBookList] = useState([]);
 
@@ -41,30 +41,11 @@ function SearchResultsPage() {
     fetchUserBooks();
   }, []);
 
-  useEffect(() => {
-    if (location.state?.books) {
-      setBooks(location.state.books);
-    }
-    if (location.state?.query) {
-      setQuery(location.state.query);
-    }
-  }, [location.state]);
-
-  useEffect(() => {
-    if (urlQuery && !location.state?.books) {
-      setQuery(urlQuery);
-      setSortOrder(urlSort);
-      fetchBooks(urlQuery, urlSort);
-    }
-  }, []);
-
   const fetchBooks = async (searchQuery, currentSort) => {
     const trimmed = searchQuery.trim();
     if (!trimmed) return;
 
-    setSearchParams({ q: trimmed, sort: currentSort }, { replace: true });
     setLoading(true);
-
     try {
       const result = await axios.get(
         `${import.meta.env.VITE_OL_SEARCH_URL}?q=${encodeURIComponent(trimmed)}&sort=${currentSort}`,
@@ -77,15 +58,28 @@ function SearchResultsPage() {
     }
   };
 
+  useEffect(() => {
+    if (!urlQuery) return;
+  
+    setQuery(urlQuery);
+    setSortOrder(urlSort);
+  
+    if (location.state?.books && location.state?.query === urlQuery) {
+      setBooks(location.state.books);
+    } else {
+      fetchBooks(urlQuery, urlSort);
+    }
+  }, [urlQuery, urlSort, location.state]);
+
   const handleNewSearch = (newQuery) => {
-    setQuery(newQuery);
-    fetchBooks(newQuery, sortOrder);
+    const trimmed = newQuery.trim();
+    if (!trimmed) return;
+    setSearchParams({ q: trimmed, sort: sortOrder }, { replace: true });
   };
 
   const handleSortChange = (e) => {
     const newSort = e.target.value;
-    setSortOrder(newSort);
-    fetchBooks(query, newSort);
+    setSearchParams({ q: query, sort: newSort }, { replace: true });
   };
 
   return (
