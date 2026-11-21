@@ -1,9 +1,9 @@
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import LoadingSpinner from "../assets/LoadingSpinner";
 import { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import styles from "./DeleteButton.module.css";
+import toast from "react-hot-toast";
 
 function DeleteButton({ bookId, onDelete, className, onSuccess }) {
   const [deleting, setDeleting] = useState(false);
@@ -11,7 +11,7 @@ function DeleteButton({ bookId, onDelete, className, onSuccess }) {
   const handleDelete = async () => {
     const token = Cookies.get("token");
     if (!token) {
-      alert("Session expired. Please log in again.");
+      toast.error("Session expired. Please log in again.");
       return;
     }
 
@@ -25,9 +25,10 @@ function DeleteButton({ bookId, onDelete, className, onSuccess }) {
       if (onDelete) {
         onDelete(bookId);
       }
+      toast.success("Book removed from shelf.")
     } catch (err) {
       console.error("Error deleting book", err);
-      alert("Failed to delete book, try again later.");
+      toast.error("Failed to delete book, try again later.");
     } finally {
       setDeleting(false);
     }

@@ -18,11 +18,11 @@ function Search(props) {
     try {
       const trimmedQuery = query.trim();
       const result = await axios.get(
-        `${import.meta.env.VITE_OL_SEARCH_URL}?q=${encodeURIComponent(trimmedQuery)}&sort=rating`,
+        `${import.meta.env.VITE_OL_SEARCH_URL}?q=${encodeURIComponent(trimmedQuery)}`,
       );
       const books = result.data.docs.slice(0, 10);
       navigate(
-        `/search-results?q=${encodeURIComponent(trimmedQuery)}&sort=rating`,
+        `/search?q=${encodeURIComponent(trimmedQuery)}&sort=relevance`,
         { state: { books, query: trimmedQuery } },
       );
     } catch (err) {

@@ -2,7 +2,8 @@ import styles from "./UpdateButton.module.css";
 import { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import CloudDownloadOutlinedIcon from '@mui/icons-material/CloudDownloadOutlined';
+import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined";
+import toast from "react-hot-toast";
 
 function UpdateButton({ bookId, updatedData, bookTitle, className }) {
   const [updating, setUpdating] = useState(false);
@@ -10,7 +11,7 @@ function UpdateButton({ bookId, updatedData, bookTitle, className }) {
   const handleUpdate = async () => {
     const token = Cookies.get("token");
     if (!token) {
-      alert("Session expired. Please log in again.");
+      toast.error("Session expired. Please log in again.");
       return;
     }
 
@@ -21,10 +22,10 @@ function UpdateButton({ bookId, updatedData, bookTitle, className }) {
         updatedData,
         { headers: { Authorization: `Bearer ${token}` } },
       );
-      alert(`"${bookTitle}" updated successfully!`);
+      toast.success(`"${bookTitle}" updated successfully!`);
     } catch (error) {
       console.error("Error updating book", error);
-      alert("Failed to update book, try again later.");
+      toast.error("Failed to update book, try again later.");
     } finally {
       setUpdating(false);
     }
@@ -37,9 +38,11 @@ function UpdateButton({ bookId, updatedData, bookTitle, className }) {
       disabled={updating}
       title="Update book"
     >
-      {updating ? ("Syncing...") : (
+      {updating ? (
+        "Syncing..."
+      ) : (
         <span className={styles.btnContent}>
-        <CloudDownloadOutlinedIcon/>  Sync
+          <CloudDownloadOutlinedIcon /> Sync
         </span>
       )}
     </button>

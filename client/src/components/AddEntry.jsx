@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import styles from "./AddEntry.module.css";
+import toast from "react-hot-toast";
 
 function AddEntryButton({ book, status, className, onSuccess }) {
   const [loading, setLoading] = useState(false);
@@ -11,7 +12,7 @@ function AddEntryButton({ book, status, className, onSuccess }) {
   const handleEntry = async (e) => {
     const token = Cookies.get("token");
     if (!token) {
-      alert("Please log in to add books to your shelf.");
+      toast.error("Please log in to add books to your shelf.");
       navigate("/login");
       return;
     }
@@ -23,14 +24,14 @@ function AddEntryButton({ book, status, className, onSuccess }) {
         { book, status },
         { headers: { Authorization: `Bearer ${token}` } },
       );
-      onSuccess?.()
-      alert(`${book.title} added to your shelf!`);
+      onSuccess?.();
+      toast.success(`"${book.title}" added to your shelf!`);
     } catch (err) {
       if (err.response && err.response.status === 400) {
-        alert("You already have this book on your shelf!");
+        toast.error("You already have this book on your shelf!");
       } else {
         console.error("Error adding book", err);
-        alert("Failed to add book to shelf, Try again later.");
+        toast.error("Failed to add book to shelf, Try again later.");
       }
     } finally {
       setLoading(false);

@@ -12,7 +12,7 @@ function SearchResultsPage() {
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const urlQuery = searchParams.get("q") || "";
-  const urlSort = searchParams.get("sort") || "rating";
+  const urlSort = searchParams.get("sort") || "relevance";
   const [books, setBooks] = useState(location.state?.books || []);
   const [query, setQuery] = useState(urlQuery || location.state?.query || "");
   const [sortOrder, setSortOrder] = useState(urlSort);
@@ -47,8 +47,13 @@ function SearchResultsPage() {
 
     setLoading(true);
     try {
+      const sortParam =
+        currentSort && currentSort !== "relevance"
+          ? `&sort=${encodeURIComponent(currentSort)}`
+          : "";
+
       const result = await axios.get(
-        `${import.meta.env.VITE_OL_SEARCH_URL}?q=${encodeURIComponent(trimmed)}&sort=${currentSort}`,
+        `${import.meta.env.VITE_OL_SEARCH_URL}?q=${encodeURIComponent(trimmed)}${sortParam}`,
       );
       setBooks(result.data.docs.slice(0, 10));
     } catch (err) {
@@ -106,6 +111,7 @@ function SearchResultsPage() {
             sortOrder={sortOrder}
             handleChange={handleSortChange}
             options={[
+              { value: "relevance", label: "Relevance" },
               { value: "rating", label: "Top Rated" },
               { value: "editions", label: "Most Editions" },
               { value: "old", label: "First Published" },
