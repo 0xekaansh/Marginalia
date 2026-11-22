@@ -14,19 +14,18 @@
 }
 
 .imageContainer {
+    display: flex;
     width: 100%;
     height: 220px;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
     background-color: var(--bg-color);
     box-shadow: var(--shadow);
 }
 
-.cover {
+.imageContainer div {
     width: 100%;
     height: 100%;
-    object-fit: fill;
 }
 
 .actionContainer {
@@ -36,6 +35,8 @@
 
 .hoverDetails {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 220px;
     background: rgba(15, 23, 42, 0.85);
@@ -69,20 +70,23 @@
     margin: 0;
 }
 
-.card:hover .hoverDetails {
-    opacity: 1;
-    pointer-events: auto;
+@media (hover: hover) {
+    .card:hover .hoverDetails {
+        opacity: 1;
+    }
 }
 
 .homepageAddBtn {
-    padding: 0.25rem;
+    padding: 0.4rem 0.5rem;
     width: 100%;
     border-radius: 8px;
     border: 1px solid var(--border-color);
     background-color: var(--btn-bg);
     color: var(--btn-color);
     font-family: var(--font-sans);
-    font-weight: 400;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
     transition: var(--transition);
 }
 
@@ -91,7 +95,19 @@
     color: var(--text-primary);
 }
 
-.homepageAddBtn:focus {
+.homepageAddBtn:focus-visible {
     background-color: var(--accent-hover);
     color: var(--card-bg);
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.9rem;
+    }
+
+    .imageContainer,
+    .hoverDetails {
+        height: 185px;
+    }
 }

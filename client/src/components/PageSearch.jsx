@@ -33,7 +33,7 @@ function PageSearch({ initialQuery, onSearch, loading }) {
         {loading ? (
           <LoadingSpinner className={styles.smallSpinner} />
         ) : (
-          <button className={styles.searchBtn} type="submit">
+          <button className={styles.searchBtn} type="submit" aria-label="Search">
             <SearchIcon />
           </button>
         )}

@@ -25,7 +25,7 @@ function DeleteButton({ bookId, onDelete, className, onSuccess }) {
       if (onDelete) {
         onDelete(bookId);
       }
-      toast.success("Book removed from shelf.")
+      toast.success("Book removed from shelf.");
     } catch (err) {
       console.error("Error deleting book", err);
       toast.error("Failed to delete book, try again later.");
@@ -36,6 +36,7 @@ function DeleteButton({ bookId, onDelete, className, onSuccess }) {
 
   return (
     <button
+      type="button"
       className={`${styles.deleteBtn} ${className || ""}`}
       onClick={handleDelete}
       disabled={deleting}

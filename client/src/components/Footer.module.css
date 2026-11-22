@@ -24,12 +24,12 @@
 
 .footerTagline {
     font-size: 0.88rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
 }
 
 .footerCopy {
     font-size: 0.82rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
 }
 
 .footerRight {
@@ -48,7 +48,7 @@
     border: 1px solid var(--border-color);
     background: #fafafa;
     color: var(--text-primary);
-    transition: all 0.2s ease;
+    transition: var(--transition);
 }
 
 .footerIconBtn:hover {
@@ -63,3 +63,13 @@
     height: 18px;
     object-fit: contain;
 }
+
+@media (max-width: 768px) {
+    .footerContainer {
+      width: 100%;
+      min-width: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }

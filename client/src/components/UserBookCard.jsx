@@ -32,19 +32,20 @@ function UserBookCard({
             <div className={styles.bookData}>
               <strong className={styles.bookTitle}>{book.title}</strong>
               <p>by {formatAuthors(book.author)}</p>
-              <p>First published in {book.publish_year || null}</p>
+              <p>
+                {book.publish_year
+                  ? `First published in ${book.publish_year}`
+                  : "Publish year unknown"}
+              </p>
             </div>
             <div className={styles.bookAction}>
               <span className={styles.shelfDate}>
                 Added on{" "}
-                {new Date(book.created_at).toLocaleDateString(
-                  "en-US",
-                  {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  },
-                )}
+                {new Date(book.created_at).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
               </span>
               <StatusOptions
                 label="Status"
@@ -64,11 +65,16 @@ function UserBookCard({
                 }
                 className={styles.optionContainer}
               />
-              <button className={styles.noteToggleBtn} onClick={toggleNote}>
+              <button
+                type="button"
+                className={styles.noteToggleBtn}
+                onClick={toggleNote}
+              >
                 <NotesOutlinedIcon /> {isNoteOpen ? "Hide Notes" : "Show Notes"}
               </button>
               <div className={styles.actionBtnContainer}>
                 <UpdateButton
+                  type="button"
                   bookId={book.id}
                   bookTitle={book.title}
                   updatedData={{

@@ -50,7 +50,7 @@ function Search(props) {
         {loading ? (
           <LoadingSpinner className={styles.smallSpinner} />
         ) : (
-          <button className={styles.searchBtn} type="submit">
+          <button className={styles.searchBtn} type="submit" aria-label="Search">
             <SearchIcon />
           </button>
         )}

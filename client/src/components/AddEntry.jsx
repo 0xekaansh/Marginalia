@@ -40,6 +40,7 @@ function AddEntryButton({ book, status, className, onSuccess }) {
 
   return (
     <button
+      type="button"
       onClick={handleEntry}
       disabled={loading}
       className={`${styles.addBtn} ${className || ""}`}

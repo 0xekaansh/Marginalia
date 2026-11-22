@@ -5,7 +5,7 @@
 
 .shelfHeader {
     display: flex;
-    margin: 1rem;
+    margin: 1rem 0;
     padding: 1rem 2rem;
     border-bottom: 1px solid var(--border-color);
     border-top: 1px solid var(--border-color);
@@ -21,6 +21,18 @@
 .shelfContainer {
     display: flex;
     flex-direction: column;
-    margin: 1rem;
+    margin: 1rem 0;
     padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+    .shelfHeader {
+        padding: 0.85rem 1rem;
+        margin: 0.75rem 0;
+    }
+
+    .shelfContainer {
+        padding: 0;
+        margin: 0.5rem 0;
+    }
 }

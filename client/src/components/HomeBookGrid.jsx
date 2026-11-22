@@ -1,4 +1,5 @@
 import AddEntryButton from "./AddEntry";
+import BookCover from "./BookCover";
 import styles from "./HomeBookGrid.module.css"
 
 function HomeBookGrid({ books }) {
@@ -6,9 +7,6 @@ function HomeBookGrid({ books }) {
     <div className={styles.grid}>
       {books.map((book) => {
         const coverId = book.cover_id || book.cover_i;
-        const coverURL = coverId
-          ? `${import.meta.env.VITE_OL_COVER_URL}/${coverId}-M.jpg`
-          : `${import.meta.env.VITE_PLACEHOLDER_URL}/120x180?text=No+Cover`;
 
         const authorName = book.authors && book.authors.length > 0
           ? book.authors[0].name
@@ -36,11 +34,11 @@ function HomeBookGrid({ books }) {
             </div>
 
             <div className={styles.imageContainer}>
-              <img src={coverURL} alt={book.title} className={styles.cover} />
+              <BookCover coverId={coverId} title={book.title} />
             </div>
 
             <div className={styles.actionContainer}>
-              <AddEntryButton book={normalizedBook} className={styles.homepageAddBtn}/>
+              <AddEntryButton book={normalizedBook} status="planToRead" className={styles.homepageAddBtn}/>
             </div>
           </div>
         );

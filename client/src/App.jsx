@@ -27,7 +27,7 @@ function App() {
             style: {
               background: "var(--card-bg)",
               color: "var(--text-primary)",
-              border: "1px solid var(--border-color",
+              border: "1px solid var(--border-color)",
               borderRadius: "10px",
               fontSize: "0.9rem",
               fontWeight: 500,

@@ -50,7 +50,7 @@
     font-weight: 500;
     padding: 0.4rem 0.6rem;
     border-radius: 8px;
-    transition: var(--color-transition);
+    transition: var(--transition);
 }
 
 .register {
@@ -85,16 +85,22 @@
     font-weight: 600;
     color: var(--text-primary);
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: var(--transition);
+}
+
+.dropDownToggleContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .dropDownToggle:hover {
     background-color: #f4f4f4;
 }
 
-.arrow-icon {
-    font-size: 0.75rem;
-    transition: transform 0.2s ease;
+.arrowIcon {
+    font-size: 1.2rem;
+    transition: var(--transition);
 }
 
 .dropDownMenu {
@@ -105,7 +111,7 @@
     min-width: 170px;
     background-color: #ffffff;
     border: 1px solid var(--border-color);
-    border-radius: 20px;
+    border-radius: 8px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     padding: 0;
     z-index: 1000;
@@ -129,17 +135,17 @@
     color: var(--text-primary);
     text-decoration: none;
     border-radius: 0;
-    transition: background-color 0.15s ease;
+    transition: var(--transition);
 }
 
 .dropDownMenu .navLink:first-of-type {
-    border-top-left-radius: 19px;
-    border-top-right-radius: 19px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
 }
 
 .dropDownMenu .navLink:last-of-type {
-    border-bottom-left-radius: 19px;
-    border-bottom-right-radius: 19px;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
 }
 
 .dropDownMenu .navLink:hover {
@@ -147,7 +153,12 @@
 }
 
 .logoutBtn {
-    color: #dc2626 !important
+    border: none;
+    border-radius: 0 0 7px 7px !important;
+    width: 100%;
+    background-color: var(--card-bg);
+    text-align: left;
+    color: var(--danger-color) !important
 }
 
 .dropDown:hover .dropDownMenu,
@@ -158,4 +169,105 @@
 .dropDown:hover .arrowIcon,
 .dropDown:focus-within .arrowIcon {
     transform: rotate(180deg);
+}
+
+.mobileSearch {
+    display: none;
+}
+
+.mobileMenu {
+    display: none;
+}
+
+.mobileDropDownToggleContent {
+    display: none;
+}
+
+@media (max-width:1200px) {
+    .header {
+        padding: 1rem 1.25rem;
+    }
+
+    .headerContainer {
+        width: 95%;
+        gap: 0.75rem;
+    }
+
+    .searchBar {
+        max-width: 255px;
+    }
+
+    .navbar {
+        width: auto;
+        gap: 0.75rem;
+    }
+
+    .logo {
+        font-size: 1.3rem;
+    }
+
+    .logo svg {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media (max-width:700px) {
+
+    .login,
+    .register {
+        display: none;
+    }
+
+    .mobileMenu {
+        display: block;
+    }
+
+    .mobileMenu .register {
+        color: var(--accent-color);
+        background-color: transparent;
+    }
+
+}
+
+@media (max-width: 540px) {
+
+    .headerContainer {
+        width: 100%;
+    }
+
+    .navbar {
+        justify-content: flex-end;
+        gap: 0.5rem;
+    }
+
+    .searchBar, .dropDownToggleContent {
+        display: none;
+    }
+
+    .mobileSearch,
+    .mobileMenu .dropDownToggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        border: none;
+        background-color: transparent;
+        color: var(--text-primary);
+        text-decoration: none;
+    }
+
+    .mobileDropDownToggleContent {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dropDownToggle {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+    }
 }

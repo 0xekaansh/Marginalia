@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import Search from "./Search";
 import styles from "./Header.module.css";
+import SearchIcon from "@mui/icons-material/Search";
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 
 function Header() {
   const { user, logout } = useAuth();
@@ -23,6 +25,9 @@ function Header() {
         </section>
         <nav className={styles.navbar}>
           <Search className={styles.searchBar} />
+          <Link to="/search" className={styles.mobileSearch}>
+            <SearchIcon fontSize="medium"/>
+          </Link>
           {user ? (
             <div className={styles.dropDown}>
               <button
@@ -30,19 +35,25 @@ function Header() {
                 className={styles.dropDownToggle}
                 aria-expanded="false"
               >
-                <span>{user.username}</span>
-                <span className={styles.arrowIcon}>&#9662;</span>
+                <div className={styles.dropDownToggleContent}>
+                  <span>{user.username}</span>
+                  <span className={styles.arrowIcon}>&#9662;</span>
+                </div>
+                <div className={styles.mobileDropDownToggleContent}>
+                  <MenuOutlinedIcon fontSize="medium" />
+                </div>
               </button>
               <div className={styles.dropDownMenu}>
                 <Link to="/list" className={styles.navLink}>
                   My Shelf
                 </Link>
-                <Link
+                <button
+                  type="button"
                   onClick={handleLogout}
                   className={`${styles.logoutBtn} ${styles.navLink}`}
                 >
                   Logout
-                </Link>
+                </button>
               </div>
             </div>
           ) : (
@@ -56,6 +67,30 @@ function Header() {
               >
                 Register
               </Link>
+
+              <div className={`${styles.dropDown} ${styles.mobileMenu}`}>
+                <button
+                  type="button"
+                  className={styles.dropDownToggle}
+                  aria-expanded="false"
+                >
+                  <MenuOutlinedIcon fontSize="medium"/>
+                </button>
+                <div className={styles.dropDownMenu}>
+                  <Link
+                    to="/register"
+                    className={`${styles.register} ${styles.navLink}`}
+                  >
+                    Register
+                  </Link>
+                  <Link
+                    to="/login"
+                    className={`${styles.login} ${styles.navLink}`}
+                  >
+                    Login
+                  </Link>
+                </div>
+              </div>
             </>
           )}
         </nav>

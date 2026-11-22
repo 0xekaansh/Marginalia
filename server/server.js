@@ -9,28 +9,47 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
+const allowedOrigins = [process.env.CLIENT_URL, "http://localhost:5173"].filter(
+  Boolean,
+);
+
+if (!process.env.JWT_SECRET) {
+  console.error("Missing required environment variable: JWT_SECRET");
+  process.exit(1);
+}
 
 // PG CONNECTION
+const isLocalDb =
+  !process.env.DATABASE_URL ||
+  process.env.DATABASE_URL.includes("localhost") ||
+  process.env.DATABASE_URL.includes("127.0.0.1");
+
 const db = new pg.Pool(
   process.env.DATABASE_URL
     ? {
         connectionString: process.env.DATABASE_URL,
-        ssl:
-          process.env.NODE_ENV === "production"
-            ? { rejectUnauthorized: false }
-            : false,
+        ssl: isLocalDb ? false : { rejectUnauthorized: false },
       }
     : {
         user: process.env.PG_USER,
         host: process.env.PG_HOST,
         database: process.env.PG_DATABASE,
         password: process.env.PG_PASSWORD,
-        port: process.env.PG_PORT,
+        port: Number(process.env.PG_PORT) || 5432,
       },
 );
 
 // MIDDLEWARE
-app.use(cors());
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -90,9 +109,10 @@ app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const result = await db.query("SELECT * FROM users WHERE email = $1", [
-      email,
-    ]);
+    const result = await db.query(
+      "SELECT id, username, email, password_hash FROM users WHERE email = $1",
+      [email],
+    );
 
     if (result.rows.length === 0) {
       return res.status(401).json({ message: "Invalid email or password " });
@@ -142,7 +162,11 @@ app.get("/api/userBookList", verifyToken, async (req, res) => {
 // ADD BOOK IN LOGGED USER'S BOOKS LIST
 app.post("/api/addNewEntry", verifyToken, async (req, res) => {
   const userID = req.user.id;
-  const { book, status } = req.body;
+  const { book, status } = req.body || {};
+  if (!book || !book.key || !book.title) {
+    return res.status(400).json({ message: "Valid book data is required." });
+  }
+  const normalizedStatus = status || "planToRead";
   const olWorkKey = book.key;
   const olEditionKey = book.cover_edition_key;
   const title = book.title;
@@ -171,7 +195,7 @@ app.post("/api/addNewEntry", verifyToken, async (req, res) => {
         authorKey,
         coverID,
         publish_year,
-        status,
+        normalizedStatus,
       ],
     );
     res.status(201).json({ message: "Book added to list successfully." });
@@ -195,11 +219,16 @@ app.put("/api/updateBook/:id", verifyToken, async (req, res) => {
     return res.status(400).json({ message: "Invalid book ID format." });
   }
   const { bookstatus, rating, notes } = req.body;
+  const normalizedRating =
+    rating === "" || rating === undefined ? null : Number(rating);
+  if (normalizedRating !== null && Number.isNaN(normalizedRating)) {
+    return res.status(400).json({ message: "Rating must be a valid number." });
+  }
 
   try {
     const result = await db.query(
       `UPDATE booklist SET bookstatus = COALESCE($1, bookstatus), rating = COALESCE($2, rating), notes = COALESCE($3, notes) WHERE id = $4 AND user_id = $5 RETURNING *`,
-      [bookstatus, rating, notes, bookID, userID],
+      [bookstatus, normalizedRating, notes, bookID, userID],
     );
 
     if (result.rows.length === 0) {
@@ -237,6 +266,17 @@ app.delete("/api/deleteBook/:id", verifyToken, async (req, res) => {
   } catch (err) {
     console.error("Failed to delete book entry", err.stack);
     res.status(500).json({ message: "Database deletion Error" });
+  }
+});
+
+// HEALTH CHECK ROUTE
+app.get("/api/health", async (req, res) => {
+  try {
+    await db.query("SELECT 1");
+    res.status(200).json({ status: "ok", database: "connected" });
+  } catch (err) {
+    console.error("Health check DB error:", err);
+    res.status(503).json({ status: "error", database: "disconnected" });
   }
 });
 

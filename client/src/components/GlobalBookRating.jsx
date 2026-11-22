@@ -7,12 +7,15 @@ function GlobalBookRating({ bookWorkKey }) {
 
   useEffect(() => {
     if (!bookWorkKey) return;
+    const normalizedKey = bookWorkKey.startsWith("/")
+      ? bookWorkKey
+      : `/${bookWorkKey}`;
 
     const fetchRating = async () => {
       setLoading(true);
       try {
         const result = await axios.get(
-          `${import.meta.env.VITE_OL_BASE_URL}${bookWorkKey}/ratings.json`,
+          `${import.meta.env.VITE_OL_BASE_URL}${normalizedKey}/ratings.json`,
         );
 
         setRatingData(result.data.summary);

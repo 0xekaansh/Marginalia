@@ -3,6 +3,13 @@ import Cookies from "js-cookie";
 
 const AuthContext = createContext(null);
 
+const getCookieOptions = () => ({
+  expires: 1,
+  path: "/",
+  sameSite: "lax",
+  secure: window.location.protocol === "https:",
+});
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -10,26 +17,42 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = Cookies.get("token");
     const savedUser = Cookies.get("user");
-    if (token && savedUser) {
+
+    if (!token) {
+      Cookies.remove("user", { path: "/" });
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
+    if (savedUser) {
       try {
         setUser(JSON.parse(savedUser));
       } catch (err) {
         console.error("Failed to parse user cookie", err);
-        setUser({ token });
+        setUser({ loggedIn: true });
       }
+    } else {
+      setUser({ loggedIn: true });
     }
+
     setLoading(false);
   }, []);
 
   const login = (token, userData) => {
-    Cookies.set("token", token, { expires: 1, sameSite: "lax" });
-    Cookies.set("user", JSON.stringify({ token, ...userData }), { expires: 1, sameSite: "lax" });
-    setUser({ token, ...userData });
+    const options = getCookieOptions();
+    Cookies.set("token", token, options);
+    if (userData) {
+      Cookies.set("user", JSON.stringify(userData), options);
+      setUser(userData);
+    } else {
+      setUser({ loggedIn: true });
+    }
   };
 
   const logout = () => {
-    Cookies.remove("token");
-    Cookies.remove("user");
+    Cookies.remove("token", { path: "/" });
+    Cookies.remove("user", { path: "/" });
     setUser(null);
   };
 

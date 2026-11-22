@@ -1,13 +1,29 @@
+import { useState } from "react";
 import styles from "./BookCover.module.css";
 
 function BookCover({ coverId, title }) {
-  const coverURL = coverId
-    ? `${import.meta.env.VITE_OL_COVER_URL}/${coverId}-M.jpg`
-    : `${import.meta.env.VITE_PLACEHOLDER_URL}/100x150?text=Cover+Not+Found`;
+  const [imgError, setImgError] = useState(false);
+
+  const coverURL =
+    coverId && !imgError
+      ? `${import.meta.env.VITE_OL_COVER_URL}/${coverId}-M.jpg`
+      : null;
 
   return (
     <div className={styles.coverContainer}>
-      <img src={coverURL} alt={title} className={styles.coverImg} />
+      {coverURL ? (
+        <img
+          src={coverURL}
+          alt={title}
+          className={styles.coverImg}
+          loading="lazy"
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        <div className={styles.fallbackCover}>
+          <span>{title || "No Cover"}</span>
+        </div>
+      )}
     </div>
   );
 }

@@ -121,7 +121,11 @@ function SearchResultsPage() {
           />
         </div>
         {books.length === 0 ? (
-          <p>No books found. Try searching for another title or author.</p>
+          !query ? (
+            <p>Enter a search term above to find books.</p>
+          ) : (
+            <p>No books found. Try searching for another title or author.</p>
+          )
         ) : (
           <SearchResultList
             books={books}

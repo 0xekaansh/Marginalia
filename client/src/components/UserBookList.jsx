@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import styles from "./UserBookList.module.css";
 import SortContainer from "./SortContainer";
+import toast from "react-hot-toast";
 
 function UserBookList() {
   const [loading, setLoading] = useState(false);
@@ -31,7 +32,7 @@ function UserBookList() {
         setBooksList(result.data);
       } catch (err) {
         console.error("Error getting Book list", err);
-        alert("Failed to load Book list, Try again later.");
+        toast.error("Failed to load Book list, Try again later.");
       } finally {
         setLoading(false);
       }
@@ -48,13 +49,16 @@ function UserBookList() {
       return b.title.localeCompare(a.title);
     }
     if (sortOrder === "firstPublished") {
-      return (b.publish_year || 0) - (a.publish_year || 0);
+      return (a.publish_year || 0) - (b.publish_year || 0);
     }
     if (sortOrder === "lastUpdated" || sortOrder === "trending") {
       return new Date(b.created_at) - new Date(a.created_at);
     }
-    if (sortOrder === "rating") {
-      return (b.rating || 0) - (a.rating || 0);
+    if (sortOrder === "ratingDesc") {
+      return (Number(b.rating) || 0) - (Number(a.rating) || 0);
+    }
+    if (sortOrder === "ratingAsc") {
+      return (Number(a.rating) || 0) - (Number(b.rating) || 0);
     }
     return 0;
   });
