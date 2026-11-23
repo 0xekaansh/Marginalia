@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import HomeBookGrid from "./HomeBookGrid";
 import styles from "./HomePage.module.css";
 import { useAuth } from "../context/authContext";
@@ -13,19 +15,29 @@ function HomePage() {
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
-  const genres = [
-    { label: "Sci-Fi", value: "science_fiction" },
-    { label: "Romance", value: "romance" },
-    { label: "Mystery", value: "mystery" },
-    { label: "History", value: "history" },
-    { label: "Horror", value: "horror" },
-    { label: "Fantasy", value: "fantasy" },
-    { label: "Crime", value: "crime" },
-    { label: "Biography", value: "biography" },
-    { label: "Drama", value: "drama" },
-    { label: "Thriller", value: "thriller" },
-    { label: "Kids", value: "kids" },
+  const GENRES = [
+    { label: "Sci-Fi", value: "science_fiction", coverId: 8231990 },
+    { label: "Romance", value: "romance", coverId: 8235657 },
+    { label: "Mystery", value: "mystery", coverId: 8228661 },
+    { label: "History", value: "history", coverId: 8231856 },
+    { label: "Horror", value: "horror", coverId: 8225261 },
+    { label: "Fantasy", value: "fantasy", coverId: 8231546 },
+    { label: "Crime", value: "crime", coverId: 8234123 },
+    { label: "Biography", value: "biography", coverId: 8229884 },
+    { label: "Drama", value: "drama", coverId: 8232110 },
+    { label: "Thriller", value: "thriller", coverId: 8236012 },
+    { label: "Kids", value: "kids", coverId: 8230441 },
   ];
+
+  const genresRef = useRef(null);
+
+  const scrollGenres = (direction) => {
+    if (!genresRef.current) return;
+    genresRef.current.scrollBy({
+      left: direction * 280,
+      behavior: "smooth",
+    });
+  };
 
   useEffect(() => {
     const fetchBooksByGenre = async () => {
@@ -73,19 +85,48 @@ function HomePage() {
 
       <div className={styles.categories}>
         <h3>Browse Categories</h3>
-        <div className={styles.genres}>
-          {genres.map((g) => {
-            const isActive = g.value === genre;
-            return (
-              <button
-                key={g.value}
-                onClick={() => setGenre(g.value)}
-                className={`${styles.genreButton} ${isActive ? styles.genreButtonActive : ""}`}
-              >
-                {g.label}
-              </button>
-            );
-          })}
+        <div className={styles.carouselWrapper}>
+          <button
+            type="button"
+            className={styles.scrollBtn}
+            onClick={() => scrollGenres(-2)}
+            aria-label="Scroll genres left"
+          >
+            <ChevronLeftIcon />
+          </button>
+
+          <div className={styles.genres} ref={genresRef}>
+            {GENRES.map((g) => {
+              const isActive = g.value === genre;
+              const thumbUrl = `${import.meta.env.VITE_OL_COVER_URL}/${g.coverId}-M.jpg`;
+              return (
+                <button
+                  key={g.value}
+                  type="button"
+                  onClick={() => setGenre(g.value)}
+                  className={`${styles.genreTile} ${isActive ? styles.genreTileActive : ""}`}
+                >
+                  <img
+                    src={thumbUrl}
+                    alt=""
+                    aria-hidden="true"
+                    className={styles.genreThumb}
+                    loading="lazy"
+                  />
+                  <span className={styles.genreLabel}>{g.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <button
+            type="button"
+            className={styles.scrollBtn}
+            onClick={() => scrollGenres(2)}
+            aria-label="Scroll genres right"
+          >
+            <ChevronRightIcon />
+          </button>
         </div>
       </div>
 
@@ -98,7 +139,7 @@ function HomePage() {
           options={[
             { value: "trending", label: "Trending" },
             { value: "new", label: "Latest" },
-            { value: "rating", label: "Top Rated" }
+            { value: "rating", label: "Top Rated" },
           ]}
         />
 

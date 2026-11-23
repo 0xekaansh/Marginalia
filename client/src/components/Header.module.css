@@ -189,7 +189,6 @@
     }
 
     .headerContainer {
-        width: 95%;
         gap: 0.75rem;
     }
 
@@ -212,11 +211,15 @@
     }
 }
 
-@media (max-width:700px) {
+@media (max-width:1025px) {
 
     .login,
     .register {
         display: none;
+    }
+
+    .headerContainer {
+        width: 95%;
     }
 
     .mobileMenu {
@@ -230,7 +233,7 @@
 
 }
 
-@media (max-width: 540px) {
+@media (max-width: 650px) {
 
     .headerContainer {
         width: 100%;

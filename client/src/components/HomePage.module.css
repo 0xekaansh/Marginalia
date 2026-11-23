@@ -85,18 +85,38 @@
     font-weight: 500;
 }
 
-.genres {
+.carouselWrapper {
+    position: relative;
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
+    align-items: center;
 }
 
-.genreButton {
-    min-width: 80px;
-    height: 42px;
-    padding: 0 0.85rem;
+.genres {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scroll-behavior: smooth;
+    padding: 0.25rem 0.15rem 0.6rem 0.25rem;
+    scrollbar-width: thin;
+}
+
+.genreTile {
+    position: relative;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-width: 100px;
+    max-width: 125px;
+    height: 140px;
+    width: 100%;
+    padding: 0.4rem 0.85rem 0.4rem 0.45rem;
     background-color: var(--btn-bg);
-    border-radius: 20px;
+    border-radius: 14px;
     border: 1px solid var(--border-color);
     color: var(--btn-color);
     font-family: var(--font-sans);
@@ -106,15 +126,71 @@
     transition: var(--transition);
 }
 
-.genreButton:hover {
+.genreTile:hover {
     background-color: var(--bg-color);
     color: var(--text-primary);
+    border-color: var(--accent-color);
 }
 
-.genreButtonActive {
+.genreTileActive {
     background-color: var(--accent-color);
     color: var(--card-bg);
     border-color: var(--accent-hover);
+}
+
+.genreThumb {
+    width: 52px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+    box-shadow: var(--shadow);
+}
+
+.genreLabel {
+    white-space: nowrap;
+}
+
+.scrollBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition);
+}
+
+.scrollBtn:first-of-type {
+    left: 0.35rem;
+}
+
+.scrollBtn:last-of-type {
+    right: 0.35rem;
+}
+
+@media (hover: hover) {
+    .carouselWrapper:hover .scrollBtn,
+    .carouselWrapper:focus-within .scrollBtn {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+.scrollBtn:hover {
+    background-color: var(--btn-bg);
+    border-color: var(--accent-color);
 }
 
 .grid {
@@ -144,12 +220,14 @@
     }
 }
 
-@media (max-width: 480px) {
-    .genreButton {
-        flex: 1 1 calc(33.333% - 0.5rem);
-        min-width: 0;
-        height: 38px;
-        font-size: 0.82rem;
-        padding: 0 0.5rem;
+
+@media (max-width: 600px) {
+    .scrollBtn {
+        display: none;
+    }
+
+    .genreTile {
+        padding: 0.35rem 0.7rem 0.35rem 0.4rem;
+        font-size: 0.84rem;
     }
 }
