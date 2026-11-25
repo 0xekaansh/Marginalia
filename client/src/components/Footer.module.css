@@ -1,4 +1,6 @@
 .siteFooter {
+    display: flex;
+    justify-content: center;
     border-top: 1px solid var(--border-color);
     background-color: var(--card-bg);
     padding: 1.25rem 1.5rem;
@@ -6,8 +8,6 @@
 }
 
 .footerContainer {
-    max-width: 1300px;
-    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,12 +64,19 @@
     object-fit: contain;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .footerContainer {
-      width: 100%;
-      min-width: 0;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
+        width: 95%;
     }
-  }
+}
+
+@media (max-width: 650px) {
+    .footerContainer {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .footerLeft{
+        text-align: center;
+    }
+}

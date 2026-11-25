@@ -16,20 +16,36 @@ function HomePage() {
   const { user } = useAuth();
 
   const GENRES = [
-    { label: "Sci-Fi", value: "science_fiction", coverId: 8231990 },
-    { label: "Romance", value: "romance", coverId: 8235657 },
-    { label: "Mystery", value: "mystery", coverId: 8228661 },
-    { label: "History", value: "history", coverId: 8231856 },
-    { label: "Horror", value: "horror", coverId: 8225261 },
-    { label: "Fantasy", value: "fantasy", coverId: 8231546 },
-    { label: "Crime", value: "crime", coverId: 8234123 },
-    { label: "Biography", value: "biography", coverId: 8229884 },
-    { label: "Drama", value: "drama", coverId: 8232110 },
-    { label: "Thriller", value: "thriller", coverId: 8236012 },
-    { label: "Kids", value: "kids", coverId: 8230441 },
+    { label: "Sci-Fi", value: "science_fiction", coverId: 9705237},
+    { label: "Romance", value: "romance", coverId: 14617366 },
+    { label: "Mystery", value: "mystery", coverId: 12836855 },
+    { label: "History", value: "history", coverId: 15253569 },
+    { label: "Horror", value: "horror", coverId: 12684825 },
+    { label: "Fantasy", value: "fantasy", coverId: 12003171 },
+    { label: "Crime", value: "crime", coverId: 15144476 },
+    { label: "Biography", value: "biography", coverId: 12680694 },
+    { label: "Drama", value: "drama", coverId: 12621719 },
+    { label: "Thriller", value: "thriller", coverId: 12002974 },
+    { label: "Kids", value: "kids", coverId: 15159585 },
   ];
 
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
   const genresRef = useRef(null);
+
+  const updateScrollButtons = () => {
+    const el = genresRef.current;
+    if (!el) return;
+
+    setCanScrollLeft(el.scrollLeft > 1);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
+  };
+
+  useEffect(() => {
+    updateScrollButtons();
+    window.addEventListener("resize", updateScrollButtons);
+    return () => window.removeEventListener("resize", updateScrollButtons);
+  }, []);
 
   const scrollGenres = (direction) => {
     if (!genresRef.current) return;
@@ -86,16 +102,22 @@ function HomePage() {
       <div className={styles.categories}>
         <h3>Browse Categories</h3>
         <div className={styles.carouselWrapper}>
-          <button
-            type="button"
-            className={styles.scrollBtn}
-            onClick={() => scrollGenres(-2)}
-            aria-label="Scroll genres left"
-          >
-            <ChevronLeftIcon />
-          </button>
+          {canScrollLeft && (
+            <button
+              type="button"
+              className={`${styles.scrollBtn} ${styles.scrollBtnLeft}`}
+              onClick={() => scrollGenres(-1)}
+              aria-label="Scroll genres left"
+            >
+              <ChevronLeftIcon />
+            </button>
+          )}
 
-          <div className={styles.genres} ref={genresRef}>
+          <div
+            className={styles.genres}
+            ref={genresRef}
+            onScroll={updateScrollButtons}
+          >
             {GENRES.map((g) => {
               const isActive = g.value === genre;
               const thumbUrl = `${import.meta.env.VITE_OL_COVER_URL}/${g.coverId}-M.jpg`;
@@ -119,14 +141,16 @@ function HomePage() {
             })}
           </div>
 
-          <button
-            type="button"
-            className={styles.scrollBtn}
-            onClick={() => scrollGenres(2)}
-            aria-label="Scroll genres right"
-          >
-            <ChevronRightIcon />
-          </button>
+          {canScrollRight && (
+            <button
+              type="button"
+              className={`${styles.scrollBtn} ${styles.scrollBtnRight}`}
+              onClick={() => scrollGenres(1)}
+              aria-label="Scroll genres right"
+            >
+              <ChevronRightIcon />
+            </button>
+          )}
         </div>
       </div>
 

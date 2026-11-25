@@ -1,11 +1,12 @@
 import OptionContainer from "./OptionContainer";
 import styles from "./SortContainer.module.css";
+import LoadingSpinner from "../assets/LoadingSpinner"
 
 function SortContainer(props) {
   return (
-    <div className={styles.gridHeader}>
+    <div className={styles.sortContainer}>
       <div className={styles.loadingWrapper}>
-        {props.loading && <p>Loading books...</p>}
+        {props.loading && <LoadingSpinner className={styles.spinner}/>}
       </div>
       <OptionContainer
         label={props.label}

@@ -10,7 +10,6 @@
     display: flex;
     justify-content: space-between;
     width: 80%;
-
 }
 
 .logo {
@@ -26,15 +25,14 @@
 .logo a {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
     text-decoration: none;
     color: inherit;
 }
 
-.logo svg {
+.logo .icon {
     width: 50px;
     height: 50px;
-    color: var(--accent-color);
+    margin-right: -5px;
 }
 
 .navbar {
@@ -117,16 +115,6 @@
     z-index: 1000;
 }
 
-.dropDownMenu::before {
-    content: "";
-    position: absolute;
-    top: -12px;
-    left: 0;
-    width: 100%;
-    height: 12px;
-    display: block;
-}
-
 .dropDownMenu .navLink {
     display: block;
     margin: 0;
@@ -158,32 +146,35 @@
     width: 100%;
     background-color: var(--card-bg);
     text-align: left;
-    color: var(--danger-color) !important
+    color: var(--danger-color) !important;
+    cursor: pointer;
 }
 
-.dropDown:hover .dropDownMenu,
-.dropDown:focus-within .dropDownMenu {
+.dropDownMenuOpen {
     display: block;
 }
 
-.dropDown:hover .arrowIcon,
-.dropDown:focus-within .arrowIcon {
+.arrowIconOpen {
     transform: rotate(180deg);
 }
 
-.mobileSearch {
-    display: none;
+@media (hover: hover) and (pointer: fine) {
+    .dropDown:hover .dropDownMenu {
+        display: block;
+    }
+
+    .dropDown:hover .arrowIcon {
+        transform: rotate(180deg);
+    }
 }
 
-.mobileMenu {
-    display: none;
-}
-
+.mobileSearch,
+.mobileMenu,
 .mobileDropDownToggleContent {
     display: none;
 }
 
-@media (max-width:1200px) {
+@media (max-width: 1200px) {
     .header {
         padding: 1rem 1.25rem;
     }
@@ -205,13 +196,14 @@
         font-size: 1.3rem;
     }
 
-    .logo svg {
-        width: 25px;
-        height: 25px;
+    .logo .icon {
+        width: 30px;
+        height: 30px;
+        margin-right: -3px;
     }
 }
 
-@media (max-width:1025px) {
+@media (max-width: 1024px) {
 
     .login,
     .register {
@@ -230,11 +222,9 @@
         color: var(--accent-color);
         background-color: transparent;
     }
-
 }
 
 @media (max-width: 650px) {
-
     .headerContainer {
         width: 100%;
     }
@@ -244,10 +234,13 @@
         gap: 0.5rem;
     }
 
-    .searchBar, .dropDownToggleContent {
+    .searchBar,
+    .dropDownToggleContent {
         display: none;
     }
 
+
+    .dropDownToggle,
     .mobileSearch,
     .mobileMenu .dropDownToggle {
         display: inline-flex;
@@ -266,11 +259,5 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-    }
-
-    .dropDownToggle {
-        background-color: transparent;
-        border: none;
-        padding: 0;
     }
 }

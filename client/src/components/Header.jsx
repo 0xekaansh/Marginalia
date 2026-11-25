@@ -1,61 +1,78 @@
-import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import SearchIcon from "@mui/icons-material/Search";
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import Search from "./Search";
 import styles from "./Header.module.css";
-import SearchIcon from "@mui/icons-material/Search";
-import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import DropdownMenu from "./Dropdown";
+import useDropdown from "../hooks/useDropDown";
 
 function Header() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { isOpen: menuOpen, menuRef, toggle: handleToggle, close: closeMenu } = useDropdown();
 
   const handleLogout = () => {
+    closeMenu();
     logout();
     navigate("/");
   };
+
+  const userTrigger = (
+    <>
+      <div className={styles.dropDownToggleContent}>
+        <span>{user?.username}</span>
+        <span
+          className={`${styles.arrowIcon} ${menuOpen ? styles.arrowIconOpen : ""}`}
+        >
+          &#9662;
+        </span>
+      </div>
+      <div className={styles.mobileDropDownToggleContent}>
+        <MenuOutlinedIcon fontSize="medium" />
+      </div>
+    </>
+  );
+
+  const userItems = [
+    { label: "My Shelf", to: "/list" },
+    { label: "Logout", onClick: handleLogout, className: styles.logoutBtn },
+  ];
+
+  const guestItems = [
+    { label: "Register", to: "/register", className: styles.register },
+    { label: "Login", to: "/login", className: styles.login },
+  ];
 
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
         <section className={styles.logo}>
-          <Link to="/">
-            <DashboardOutlinedIcon /> Marginalia
+          <Link to="/" onClick={closeMenu}>
+            <img src="/favicon.svg" alt="" className={styles.icon} />arginalia
           </Link>
         </section>
+
         <nav className={styles.navbar}>
           <Search className={styles.searchBar} />
-          <Link to="/search" className={styles.mobileSearch}>
-            <SearchIcon fontSize="medium"/>
+          <Link
+            to="/search"
+            className={styles.mobileSearch}
+            onClick={closeMenu}
+            aria-label="Search books"
+          >
+            <SearchIcon fontSize="medium" />
           </Link>
+
           {user ? (
-            <div className={styles.dropDown}>
-              <button
-                type="button"
-                className={styles.dropDownToggle}
-                aria-expanded="false"
-              >
-                <div className={styles.dropDownToggleContent}>
-                  <span>{user.username}</span>
-                  <span className={styles.arrowIcon}>&#9662;</span>
-                </div>
-                <div className={styles.mobileDropDownToggleContent}>
-                  <MenuOutlinedIcon fontSize="medium" />
-                </div>
-              </button>
-              <div className={styles.dropDownMenu}>
-                <Link to="/list" className={styles.navLink}>
-                  My Shelf
-                </Link>
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className={`${styles.logoutBtn} ${styles.navLink}`}
-                >
-                  Logout
-                </button>
-              </div>
-            </div>
+            <DropdownMenu
+              isOpen={menuOpen}
+              onToggle={handleToggle}
+              onClose={closeMenu}
+              triggerContent={userTrigger}
+              items={userItems}
+              menuRef={menuRef}
+            />
           ) : (
             <>
               <Link to="/login" className={`${styles.login} ${styles.navLink}`}>
@@ -67,30 +84,15 @@ function Header() {
               >
                 Register
               </Link>
-
-              <div className={`${styles.dropDown} ${styles.mobileMenu}`}>
-                <button
-                  type="button"
-                  className={styles.dropDownToggle}
-                  aria-expanded="false"
-                >
-                  <MenuOutlinedIcon fontSize="medium"/>
-                </button>
-                <div className={styles.dropDownMenu}>
-                  <Link
-                    to="/register"
-                    className={`${styles.register} ${styles.navLink}`}
-                  >
-                    Register
-                  </Link>
-                  <Link
-                    to="/login"
-                    className={`${styles.login} ${styles.navLink}`}
-                  >
-                    Login
-                  </Link>
-                </div>
-              </div>
+              <DropdownMenu
+                isOpen={menuOpen}
+                onToggle={handleToggle}
+                onClose={closeMenu}
+                triggerContent={<MenuOutlinedIcon fontSize="medium" />}
+                items={guestItems}
+                extraClassName={styles.mobileMenu}
+                menuRef={menuRef}
+              />
             </>
           )}
         </nav>

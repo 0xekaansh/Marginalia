@@ -1,17 +1,21 @@
 .loaderContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+}
+
+.spinner {
+  animation: rotateSpinner 1.4s linear infinite;
+  transform-origin: center;
+  padding: 0;
+  height: 30px;
+  width: 30px;
+}
+
+@keyframes rotateSpinner {
+  100% {
+    transform: rotate(360deg);
   }
-  
-  .spinner {
-    animation: rotateSpinner 1.4s linear infinite;
-    transform-origin: center;
-  }
-  
-  @keyframes rotateSpinner {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
+}

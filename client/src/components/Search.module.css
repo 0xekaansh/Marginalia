@@ -59,23 +59,11 @@
 .smallSpinner {
     position: absolute;
     right: 6px;
-    padding: 0 !important;
-    height: 40px;
-    width: 40px;
-}
-
-.smallSpinner svg {
-    height: 30px;
-    width: 30px;
 }
 
 .pageSearch {
     display: flex;
     align-items: center;
     position: relative;
-    width: 100%;
-}
-
-.pageSearch .search {
-    max-width: 100%;
+    width: 30%;
 }

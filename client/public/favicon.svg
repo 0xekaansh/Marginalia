@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" fill="none">
+  <defs>
+    
+    <clipPath id="left-page-clip">
+      <path d="M 22 32 L 64 54 L 64 90 L 42 71 L 42 104 L 22 104 Z" />
+    </clipPath>
+
+    
+    <clipPath id="right-cover-clip">
+      <path d="M 64 54 L 106 32 L 106 104 L 86 104 L 86 71 L 64 90 Z" />
+    </clipPath>
+  </defs>
+
+  
+  <path d="M 64 52 C 55 37, 43 27, 34 23 L 34 38 L 64 54 Z" fill="#DDD6C5" stroke="#1B1E59" stroke-width="3.5" stroke-linejoin="round" />
+  <path d="M 64 52 C 73 37, 85 27, 94 23 L 94 38 L 64 54 Z" fill="#DDD6C5" stroke="#1B1E59" stroke-width="3.5" stroke-linejoin="round" />
+
+  
+  <path d="M 64 53 C 53 40, 40 31, 28 27 L 28 36 L 64 54 Z" fill="#FAF6EE" stroke="#1B1E59" stroke-width="3.5" stroke-linejoin="round" />
+  <path d="M 64 53 C 75 40, 88 31, 100 27 L 100 36 L 64 54 Z" fill="#FAF6EE" stroke="#1B1E59" stroke-width="3.5" stroke-linejoin="round" />
+
+  
+  <g clip-path="url(#left-page-clip)">
+    <rect x="20" y="30" width="46" height="76" fill="#FAF6EE" />
+    
+    <g stroke="#DFD7C8" stroke-width="2.2">
+      <line x1="20" y1="36" x2="66" y2="60" />
+      <line x1="20" y1="46" x2="66" y2="70" />
+      <line x1="20" y1="56" x2="66" y2="80" />
+      <line x1="20" y1="66" x2="66" y2="90" />
+      <line x1="20" y1="76" x2="66" y2="100" />
+      <line x1="20" y1="86" x2="66" y2="110" />
+      <line x1="20" y1="96" x2="66" y2="120" />
+    </g>
+    
+    <line x1="31" y1="30" x2="31" y2="106" stroke="#E06D5B" stroke-width="2.2" />
+  </g>
+
+  
+  <g clip-path="url(#right-cover-clip)">
+    <rect x="64" y="30" width="44" height="76" fill="#4645E5" />
+    
+    <path d="M 106 46 C 102 74, 94 92, 84 104 L 106 104 Z" fill="#3736C9" />
+  </g>
+
+  
+  <g stroke="#1B1E59" stroke-width="2.5" stroke-linecap="round">
+    <line x1="39" y1="48" x2="39" y2="60" />
+    <line x1="33" y1="54" x2="45" y2="54" />
+    <line x1="34.8" y1="49.8" x2="43.2" y2="58.2" />
+    <line x1="43.2" y1="49.8" x2="34.8" y2="58.2" />
+  </g>
+
+  
+  <path d="M 22 32 L 64 54 L 106 32 L 106 104 L 86 104 L 86 71 L 64 90 L 42 71 L 42 104 L 22 104 Z" stroke="#1B1E59" stroke-width="4.5" stroke-linejoin="round" />
+  <line x1="64" y1="54" x2="64" y2="90" stroke="#1B1E59" stroke-width="4.5" stroke-linecap="round" />
+</svg>

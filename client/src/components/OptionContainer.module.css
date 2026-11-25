@@ -3,6 +3,7 @@
     align-items: center;
     gap: 0.5rem;
     flex-wrap: wrap;
+    height: 42px;
 }
 
 .Container select {
@@ -27,4 +28,16 @@
 .Container select:hover {
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
     border-color: var(--accent-color);
+}
+
+@media (max-width: 540px) {
+    .Container label {
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+    .Container select {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
 }
