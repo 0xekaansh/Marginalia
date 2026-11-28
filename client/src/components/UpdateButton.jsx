@@ -41,9 +41,9 @@ function UpdateButton({ bookId, updatedData, bookTitle, className }) {
       {updating ? (
         "Syncing..."
       ) : (
-        <span className={styles.btnContent}>
-          <CloudDownloadOutlinedIcon /> Sync
-        </span>
+        <>
+          <CloudDownloadOutlinedIcon fontSize="medium"/> Sync
+        </>
       )}
     </button>
   );

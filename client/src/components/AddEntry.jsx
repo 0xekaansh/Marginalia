@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import styles from "./AddEntry.module.css";
 import toast from "react-hot-toast";
+import ControlPointOutlinedIcon from '@mui/icons-material/ControlPointOutlined';
 
 function AddEntryButton({ book, status, className, onSuccess }) {
   const [loading, setLoading] = useState(false);
@@ -45,7 +46,7 @@ function AddEntryButton({ book, status, className, onSuccess }) {
       disabled={loading}
       className={`${styles.addBtn} ${className || ""}`}
     >
-      {loading ? "Adding" : "+ Add To Shelf"}
+      {loading ? "Adding..." : <><ControlPointOutlinedIcon fontSize="medium" />  Add To Shelf</>}
     </button>
   );
 }

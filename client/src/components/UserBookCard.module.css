@@ -1,11 +1,13 @@
 .listItem {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    background-color: var(--list-bg-color);
-    padding: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 12px;
+    padding: 1.5rem;
+    gap: 1.5rem;
     box-shadow: var(--shadow);
 }
 
@@ -13,33 +15,6 @@
     display: flex;
     gap: 1.25rem;
     width: 100%;
-}
-
-.bookDetails {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    min-width: 0;
-    flex: 1;
-    gap: 1.5rem;
-}
-
-.bookData {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    flex: 1;
-    padding: 1rem;
-}
-
-.bookTitle {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-    word-break: break-word;
-}
-
-.bookData p {
-    margin-top: 0.3rem;
 }
 
 .bookAction {
@@ -53,6 +28,7 @@
 
 .shelfDate {
     font-size: 0.75rem;
+    text-align: left;
     color: var(--text-secondary);
     margin-bottom: 0.25rem;
     border-bottom: 1px solid var(--border-color);
@@ -122,30 +98,16 @@
     gap: 0.8rem;
 }
 
-@media (max-width: 900px) {
-    .bookDetails {
+@media (max-width: 820px) {
+    .cardMain {
         flex-direction: column;
-        align-items: stretch;
-        gap: 1rem;
-    }
-
-    .bookData {
-        padding: 0.25rem 0;
-    }
-
-    .bookAction {
-        align-items: stretch;
-        text-align: left;
+        gap: 0.85rem;
     }
 
     .optionContainer select {
         width: auto;
         min-width: 140px;
         flex: 0 1 60%;
-    }
-
-    .noteToggleBtn {
-        align-self: flex-start;
     }
 
     .actionBtnContainer {
@@ -157,17 +119,6 @@
     .listItem {
         padding: 0.75rem;
     }
-
-    .cardMain {
-        flex-direction: column;
-        align-items: center;
-        gap: 0.85rem;
-    }
-
-    .bookData {
-        text-align: center;
-    }
-
     .actionBtnContainer>* {
         flex: 1 1 auto;
     }

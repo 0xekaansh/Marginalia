@@ -17,15 +17,10 @@
     padding: 0 2rem;
 }
 
-.searchBar {
-    display: flex;
-    padding: 2rem 0;
-    justify-content: space-between;
-}
-
 @media (max-width: 768px) {
     .searchHeading {
         padding: 0.85rem 1rem;
+        font-size: 0.9rem;
     }
 
     .searchResult {

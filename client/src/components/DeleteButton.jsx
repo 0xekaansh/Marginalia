@@ -42,7 +42,13 @@ function DeleteButton({ bookId, onDelete, className, onSuccess }) {
       disabled={deleting}
       title="Delete book"
     >
-      <DeleteOutlinedIcon /> Delete
+      {deleting ? (
+        "Deleting..."
+      ) : (
+        <>
+          <DeleteOutlinedIcon fontSize="medium"/> Delete
+        </>
+      )}
     </button>
   );
 }

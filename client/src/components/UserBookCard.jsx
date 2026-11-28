@@ -7,6 +7,7 @@ import { formatAuthors } from "../utils/formatter";
 import NotesOutlinedIcon from "@mui/icons-material/NotesOutlined";
 import BookNotes from "./BookNotes";
 import DeleteButton from "./DeleteButton";
+import BookDetails from "./BookDetails";
 
 function UserBookCard({
   book,
@@ -27,85 +28,80 @@ function UserBookCard({
     <li>
       <div className={styles.listItem}>
         <div className={styles.cardMain}>
-          <BookCover coverId={book.cover_id} title={book.title} />
-          <div className={styles.bookDetails}>
-            <div className={styles.bookData}>
-              <strong className={styles.bookTitle}>{book.title}</strong>
-              <p>by {formatAuthors(book.author)}</p>
-              <p>
-                {book.publish_year
-                  ? `First published in ${book.publish_year}`
-                  : "Publish year unknown"}
-              </p>
-            </div>
-            <div className={styles.bookAction}>
-              <span className={styles.shelfDate}>
-                Added on{" "}
-                {new Date(book.created_at).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
-              </span>
-              <StatusOptions
-                label="Status"
-                id={`status-${book.id}`}
-                value={currentStatus}
-                onChange={(e) =>
-                  handleFieldChange(book.id, "bookstatus", e.target.value)
-                }
-                className={styles.optionContainer}
-              />
-              <RatingOptions
-                label="Your Score"
-                id={`score-${book.id}`}
-                value={currentScore}
-                onChange={(e) =>
-                  handleFieldChange(book.id, "rating", e.target.value)
-                }
-                className={styles.optionContainer}
-              />
-              <button
+          <BookDetails
+            cover={book.cover_id}
+            title={book.title}
+            author={book.author}
+            publishYear={book.publish_year}
+            bookWorkKey={book.ol_work_key}
+          />
+          <div className={styles.bookAction}>
+            <span className={styles.shelfDate}>
+              Added on{" "}
+              {new Date(book.created_at).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
+            </span>
+            <StatusOptions
+              label="Status"
+              id={`status-${book.id}`}
+              value={currentStatus}
+              onChange={(e) =>
+                handleFieldChange(book.id, "bookstatus", e.target.value)
+              }
+              className={styles.optionContainer}
+            />
+            <RatingOptions
+              label="Your Score"
+              id={`score-${book.id}`}
+              value={currentScore}
+              onChange={(e) =>
+                handleFieldChange(book.id, "rating", e.target.value)
+              }
+              className={styles.optionContainer}
+            />
+            <button
+              type="button"
+              className={styles.noteToggleBtn}
+              onClick={toggleNote}
+            >
+              <NotesOutlinedIcon /> {isNoteOpen ? "Hide Notes" : "Show Notes"}
+            </button>
+            <div className={styles.actionBtnContainer}>
+              <UpdateButton
                 type="button"
-                className={styles.noteToggleBtn}
-                onClick={toggleNote}
-              >
-                <NotesOutlinedIcon /> {isNoteOpen ? "Hide Notes" : "Show Notes"}
-              </button>
-              <div className={styles.actionBtnContainer}>
-                <UpdateButton
-                  type="button"
-                  bookId={book.id}
-                  bookTitle={book.title}
-                  updatedData={{
-                    bookstatus: currentStatus,
-                    rating: currentScore,
-                    notes: currentNotes,
-                  }}
-                  className={styles.updateBtn}
-                />
-                <DeleteButton
-                  bookId={book.id}
-                  bookTitle={book.title}
-                  onDelete={onDelete}
-                  className={styles.deleteBtn}
-                />
-              </div>
+                bookId={book.id}
+                bookTitle={book.title}
+                updatedData={{
+                  bookstatus: currentStatus,
+                  rating: currentScore,
+                  notes: currentNotes,
+                }}
+                className={styles.updateBtn}
+              />
+              <DeleteButton
+                bookId={book.id}
+                bookTitle={book.title}
+                onDelete={onDelete}
+                className={styles.deleteBtn}
+              />
             </div>
           </div>
         </div>
-
-        {isNoteOpen && (
-          <BookNotes
-            bookId={book.id}
-            currentNotes={currentNotes}
-            isNoteOpen={isNoteOpen}
-            isEditingNote={isEditingNote}
-            toggleEdit={toggleEdit}
-            handleFieldChange={handleFieldChange}
-          />
-        )}
       </div>
+
+      {isNoteOpen && (
+        <BookNotes
+          bookId={book.id}
+          currentNotes={currentNotes}
+          isNoteOpen={isNoteOpen}
+          isEditingNote={isEditingNote}
+          toggleEdit={toggleEdit}
+          handleFieldChange={handleFieldChange}
+        />
+      )}
     </li>
   );
 }

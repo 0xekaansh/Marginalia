@@ -26,6 +26,8 @@
 
 .heroLinks {
     flex-shrink: 0;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
 }
 
 .joinLink {
@@ -37,6 +39,7 @@
     border-radius: 15px;
     white-space: nowrap;
     transition: var(--transition);
+    box-shadow: var(--shadow);
 }
 
 .joinLink:hover {
@@ -125,6 +128,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
+    box-shadow: var(--shadow);
 }
 
 .genreTile:hover {
@@ -182,6 +186,7 @@
 }
 
 @media (hover: hover) {
+
     .carouselWrapper:hover .scrollBtn,
     .carouselWrapper:focus-within .scrollBtn {
         opacity: 1;
@@ -211,7 +216,7 @@
 
     .heroLinks,
     .joinLink {
-        width: 100%;
+        align-self: center;
         text-align: center;
     }
 

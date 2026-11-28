@@ -8,6 +8,7 @@ import DeleteButton from "./DeleteButton";
 import UpdateButton from "./UpdateButton";
 import GlobalBookRating from "./GlobalBookRating";
 import { useState } from "react";
+import BookDetails from "./BookDetails";
 
 function SearchResultList({ books, userBookList = [], onShelfChange }) {
   const [bookEdits, setBookEdits] = useState({});
@@ -50,14 +51,13 @@ function SearchResultList({ books, userBookList = [], onShelfChange }) {
 
         return (
           <li key={book.key || index} className={styles.listItem}>
-            <BookCover coverId={book.cover_i} title={book.title} />
-
-            <div className={styles.bookData}>
-              <strong className={styles.bookTitle}>{book.title}</strong>
-              <p>by {formatAuthors(book.author_name)}</p>
-              <p>First published in {book.first_publish_year || "N/A"}</p>
-              <GlobalBookRating bookWorkKey={book.key} />
-            </div>
+            <BookDetails
+              cover={book.cover_i}
+              title={book.title}
+              author={book.author_name}
+              publishYear={book.first_publish_year}
+              bookWorkKey={book.key}
+            />
 
             <div className={styles.actionButtons}>
               {existingEntry ? (
@@ -115,7 +115,7 @@ function SearchResultList({ books, userBookList = [], onShelfChange }) {
                   </div>
                 </div>
               ) : (
-                <div className={styles.userControls}>
+                <div className={`${styles.userControls} ${styles.buttonGroup}`}>
                   <StatusOptions
                     label="Status"
                     id={`new-status-${bookKey}`}

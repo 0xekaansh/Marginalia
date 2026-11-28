@@ -169,7 +169,7 @@ function AuthForm({ isRegister = false }) {
         )}
 
         <button type="submit" disabled={loading} className={styles.submitBtn}>
-          {isRegister ? "Register" : "Log In"}
+          {loading ? "Submitting..." : isRegister ? "Register" : "Log In"}
         </button>
       </form>
 
