@@ -6,6 +6,7 @@ import UserBookList from "./components/UserBookList";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import SearchResultsPage from "./components/SearchResultPage";
+import NotFoundPage from "./components/NotFoundPage";
 import { ProtectedRoute } from "./context/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
 import "./App.css";
@@ -41,7 +42,7 @@ function App() {
             error: {
               iconTheme: {
                 primary: "var(--danger-color)",
-                secondary: "var(--card-bg)" ,
+                secondary: "var(--card-bg)",
               },
             },
           }}
@@ -52,9 +53,15 @@ function App() {
             <Route path="/search" element={<SearchResultsPage />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route element={<ProtectedRoute />}>
-              <Route path="/list" element={<UserBookList />} />
-            </Route>
+            <Route
+              path="/list"
+              element={
+                <ProtectedRoute>
+                  <UserBookList />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
         <Footer />
