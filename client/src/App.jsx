@@ -8,7 +8,7 @@ import Login from "./components/Login";
 import SearchResultsPage from "./components/SearchResultPage";
 import { ProtectedRoute } from "./context/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
-import "./app.css";
+import "./App.css";
 
 function App() {
   return (
